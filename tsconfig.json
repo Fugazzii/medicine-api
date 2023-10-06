@@ -29,6 +29,24 @@
       ],
       "@app/common/*": [
         "libs/common/src/*"
+      ],
+      "@app/client-lib": [
+        "libs/client-lib/src"
+      ],
+      "@app/client-lib/*": [
+        "libs/client-lib/src/*"
+      ],
+      "@app/doctor-lib": [
+        "libs/doctor-lib/src"
+      ],
+      "@app/doctor-lib/*": [
+        "libs/doctor-lib/src/*"
+      ],
+      "@app/auth": [
+        "libs/auth/src"
+      ],
+      "@app/auth/*": [
+        "libs/auth/src/*"
       ]
     }
   }
