@@ -1,8 +1,7 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post } from "@nestjs/common";
 
 @Controller()
 export class ClientDoctorController {
-  
   public constructor() {}
 
   @Get("/matching_doctors")
@@ -13,5 +12,4 @@ export class ClientDoctorController {
 
   @Post("/hide/:id")
   public async hideDoctor() {}
-
 }

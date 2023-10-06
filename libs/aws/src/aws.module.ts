@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
-import { AwsService } from './aws.service';
+import { Module } from "@nestjs/common";
+import { SesService } from "./services/ses.service";
+import { ConfigService } from "@nestjs/config";
 
 @Module({
-  providers: [AwsService],
-  exports: [AwsService],
+  providers: [SesService, ConfigService],
+  exports: [SesService]
 })
 export class AwsModule {}

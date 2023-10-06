@@ -1,8 +1,7 @@
-import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Patch, Post } from "@nestjs/common";
 
 @Controller()
 export class ClientFormController {
-  
   public constructor() {}
 
   @Get("/forms/:id")
@@ -19,5 +18,4 @@ export class ClientFormController {
 
   @Patch("/form/:id")
   public async editForm() {}
-
 }
