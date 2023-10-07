@@ -4,6 +4,8 @@
 
 # Env
 *.env
+apps/client/*.env
+apps/doctor/*.env
 
 # Logs
 logs
