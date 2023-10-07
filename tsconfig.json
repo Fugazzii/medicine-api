@@ -41,6 +41,12 @@
       ],
       "@app/doctor-lib/*": [
         "libs/doctor-lib/src/*"
+      ],
+      "@app/redis": [
+        "libs/redis/src"
+      ],
+      "@app/redis/*": [
+        "libs/redis/src/*"
       ]
     }
   }
