@@ -2,18 +2,18 @@ import { Injectable } from "@nestjs/common";
 import { ClientRepositoryInterface } from "../client.repository.interface";
 import { ClientEntity } from "../../entities";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ClientModel } from "../../models";
 import { Repository } from "typeorm";
+import { ClientTypeormModel } from "../../models";
 
 @Injectable()
-export class ClientRepository implements ClientRepositoryInterface {
+export class ClientTypeormRepository implements ClientRepositoryInterface {
     
     public constructor(
-        @InjectRepository(ClientModel) private readonly repository: Repository<ClientModel>
+        @InjectRepository(ClientTypeormModel) private readonly repository: Repository<ClientTypeormModel>
     ) {}
 
-    public async save(newClient: ClientEntity): Promise<ClientEntity> {
-        return this.repository.create(newClient);
+    public async save(newClient: Omit<ClientEntity, "id">): Promise<void> {
+        this.repository.insert(newClient);
     }
 
     public async findOne(id: number): Promise<ClientEntity>;

@@ -4,30 +4,16 @@ import { ClientAuthController } from "./client-auth.controller";
 import { ClientDoctorController } from "./client-doctor.controller";
 import { AwsModule } from "@app/aws";
 import { SesService } from "@app/aws/services/ses.service";
-import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ClientLibModule } from "@app/client-lib";
+import { OrmSource } from "@app/client-lib/lib/tokens";
+import { ClientAuthService } from "@app/client-lib/lib/services";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ 
-      isGlobal: true
-    }),
-    TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({
-        type: "postgres",
-        username: configService.get<string>("POSTGRES_USERNAME"),
-        password: configService.get<string>("POSTGRES_PASSWORD"),
-        database: configService.get<string>("POSTGRES_DATABASE"),
-        host: configService.get<string>("POSTGRES_HOST"),
-        port: configService.get<number>("POSTGRES_PORT"),
-        synchronize: true,
-        entities: []
-      }),
-      inject: [ConfigService]
-    }),
+    ConfigModule.forRoot({ isGlobal: true }),
     AwsModule,
-    ClientLibModule
+    ClientLibModule.forRoot(OrmSource.TYPEORM)
   ],
   controllers: [
     ClientFormController,
@@ -36,7 +22,8 @@ import { ClientLibModule } from "@app/client-lib";
   ],
   providers: [
     SesService,
-    ConfigService
+    ConfigService,
+    ClientAuthService
   ]
 })
 export class ClientModule {}

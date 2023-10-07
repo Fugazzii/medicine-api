@@ -1,6 +1,6 @@
 export class SignUpClientDto {
 
-    public private_id: number;
+    public private_id: string;
 
     public email: string;
 
