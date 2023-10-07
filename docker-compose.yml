@@ -1,0 +1,56 @@
+version: '3'
+services:
+
+  # Client microservice
+  client:
+    build:
+      context: ./
+      dockerfile: ./apps/client/Dockerfile
+    env_file:
+      - ./apps/client/.env
+    depends_on:
+      - postgres_clients
+      - redis
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3001:3001
+
+  # Doctor microservice
+  # doctor:
+  #   build:
+  #     context: ./
+  #     dockerfile: ./apps/doctor
+  
+  # Postgres clients
+  postgres_clients:
+    image: postgres
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_clients:/var/lib/postgresql/data
+  
+  # Postgres doctors
+  # postgres_doctors:
+  #   image: postgres
+  #   ports:
+  #     - 5432:5433
+  #   environment:
+  #     POSTGRES_USER: ilia
+  #     POSTGRES_DB: doctors
+  #     POSTGRES_PASSWORD: iliamagaria
+  #   volumes:
+  #     - postgres_doctors:/var/lib/postgresql/data
+
+  # REDIS
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+
+volumes:
+  postgres_clients:
+  redis:

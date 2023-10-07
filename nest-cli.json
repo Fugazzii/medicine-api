@@ -1,24 +1,15 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/medicine-api/src",
+  "sourceRoot": "apps/",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/medicine-api/tsconfig.app.json"
+    "tsConfigPath": "./"
   },
   "monorepo": true,
-  "root": "apps/medicine-api",
+  "root": "apps/",
   "projects": {
-    "medicine-api": {
-      "type": "application",
-      "root": "apps/medicine-api",
-      "entryFile": "main",
-      "sourceRoot": "apps/medicine-api/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/medicine-api/tsconfig.app.json"
-      }
-    },
     "client": {
       "type": "application",
       "root": "apps/client",
