@@ -41,12 +41,6 @@
       ],
       "@app/doctor-lib/*": [
         "libs/doctor-lib/src/*"
-      ],
-      "@app/auth": [
-        "libs/auth/src"
-      ],
-      "@app/auth/*": [
-        "libs/auth/src/*"
       ]
     }
   }

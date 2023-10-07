@@ -1,21 +1,23 @@
 import { SesService } from "@app/aws";
-import { Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, UsePipes } from "@nestjs/common";
+import { JoiValidationPipe } from "./pipes";
+import { SignUpClientSchema } from "@app/client-lib/lib/schemas";
+import { SignUpClientDto } from "@app/client-lib/lib/dtos";
 
 @Controller()
 export class ClientAuthController {
   
-  public constructor(private readonly sesService: SesService) {}
-
-  @Get("/ping")
-  public async ping() {
-    this.sesService.sendMail("sichinavaili@gmail.com", "zd yleo", "ravaxar")
-  }
+  public constructor() {}
 
   @Post("/sign-in")
   public async signIn() {}
 
   @Post("/sign-up")
-  public async signUp() {}
+  @HttpCode(HttpStatus.OK)
+  @UsePipes(new JoiValidationPipe(SignUpClientSchema))
+  public async signUp(@Body() signUpClientDto: SignUpClientDto) {
+    return signUpClientDto;
+  }
 
   @Post("/sign-up/verify")
   public async verify() {}

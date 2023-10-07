@@ -10,7 +10,6 @@ import { ClientLibModule } from "@app/client-lib";
 
 @Module({
   imports: [
-    AwsModule,
     ConfigModule.forRoot({ 
       isGlobal: true
     }),
@@ -27,6 +26,7 @@ import { ClientLibModule } from "@app/client-lib";
       }),
       inject: [ConfigService]
     }),
+    AwsModule,
     ClientLibModule
   ],
   controllers: [
