@@ -18,6 +18,8 @@ import { ClientAuthService } from './lib/services';
  * Exported lib imports
  */
 import { RedisModule, RedisService } from '@app/redis';
+import { AuthClientGuard } from './lib/guards/';
+import { JwtService } from '@app/common/lib/services';
 
 @Module({})
 export class ClientLibModule {
@@ -50,14 +52,17 @@ export class ClientLibModule {
         mailSenderProvider, 
         ClientTypeormRepository, 
         ClientAuthService, 
-        RedisService
+        RedisService,
+        AuthClientGuard,
+        JwtService
       ],
       exports: [
         ormProvider,
         mailSenderProvider,
         ClientTypeormRepository,
         ClientAuthService,
-        RedisService
+        RedisService,
+        AuthClientGuard
       ]
     };
   }

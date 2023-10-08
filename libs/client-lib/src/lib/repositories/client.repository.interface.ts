@@ -2,7 +2,6 @@ import { ClientEntity } from "../entities";
 
 export interface ClientRepositoryInterface {
     save(newClient: Omit<ClientEntity, "id">): Promise<void>;
-    findOne(id: number): Promise<ClientEntity>;
-    findOne(email: string): Promise<ClientEntity>;
+    findOne(arg: string | number): Promise<ClientEntity>;
     deleteOne(id: number): Promise<void>;
 }

@@ -1,13 +1,14 @@
 /**
  * Nest imports
  */
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, UsePipes } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, UseGuards, UsePipes } from "@nestjs/common";
 
 /**
  * Lib imports
  */
 import { SignUpClientSchema } from "@app/client-lib/lib/schemas";
 import { SignInClientDto, SignUpClientDto } from "@app/client-lib/lib/dtos";
+import { AuthClientGuard } from "@app/client-lib/lib/guards";
 
 /**
  * Local imports
@@ -57,6 +58,12 @@ export class ClientAuthController {
       message: "Signed in client",
       data: token
     };
+  }
+
+  @Get("/")
+  @UseGuards(AuthClientGuard)
+  public async protectedRoute() {
+    return "Works";
   }
 
   @Post("/reset-password")

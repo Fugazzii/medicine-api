@@ -20,8 +20,10 @@ export class ClientAuthService {
         return this.clientRepository.save(newClient);
     }
 
-    public async clientExists(email: string): Promise<boolean> {
-        const result = await this.clientRepository.findOne(email);
+    public async clientExists(id: number): Promise<boolean>;
+    public async clientExists(email: string): Promise<boolean>;
+    public async clientExists(arg: string | number): Promise<boolean> {
+        const result = await this.clientRepository.findOne(arg);
         return Boolean(result);
     }
 
