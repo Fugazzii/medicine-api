@@ -1,11 +1,14 @@
-import { randomUUID } from "crypto";
-import { ConfigService } from "@nestjs/config";
+/**
+ * Nest imports
+ */
+import { Injectable } from "@nestjs/common";
+
+/**
+ * Lib imports
+ */
 import { RedisService } from "@app/redis";
-import { Injectable, Inject } from "@nestjs/common";
 import { SignUpClientDto } from "@app/client-lib/lib/dtos";
-import { MailSenderInterface } from "@app/client-lib/lib/providers";
 import { ClientAuthService } from "@app/client-lib/lib/services";
-import { MAIL_SENDER_TOKEN } from "@app/client-lib/lib/tokens";
 
 @Injectable()
 export class ClientAuthFacade {

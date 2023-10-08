@@ -1,9 +1,16 @@
+/**
+ * Nest imports
+ */
 import { Injectable } from "@nestjs/common";
-import { ClientRepositoryInterface } from "../client.repository.interface";
-import { ClientEntity } from "../../entities";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+
+/**
+ * Local imports
+ */
+import { ClientEntity } from "../../entities";
 import { ClientTypeormModel } from "../../models";
+import { ClientRepositoryInterface } from "../client.repository.interface";
 
 @Injectable()
 export class ClientTypeormRepository implements ClientRepositoryInterface {

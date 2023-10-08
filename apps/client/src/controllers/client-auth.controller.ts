@@ -1,7 +1,18 @@
+/**
+ * Nest imports
+ */
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, UsePipes } from "@nestjs/common";
-import { JoiValidationPipe } from "../pipes";
+
+/**
+ * Lib imports
+ */
 import { SignUpClientSchema } from "@app/client-lib/lib/schemas";
 import { SignUpClientDto } from "@app/client-lib/lib/dtos";
+
+/**
+ * Local imports
+ */
+import { JoiValidationPipe } from "../pipes";
 import { ClientAuthFacade } from "../facade";
 
 @Controller()

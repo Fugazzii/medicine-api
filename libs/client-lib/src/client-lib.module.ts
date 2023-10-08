@@ -1,11 +1,22 @@
+/**
+ * Nest imports
+ */
 import { Module, DynamicModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+
+/**
+ * Local lib imports
+ */
 import { MailSenderSource, OrmSource } from './lib/tokens';
 import { MailSenderProvider, OrmProvider } from './lib/providers';
 import { ClientTypeormRepository } from './lib/repositories';
 import { ClientTypeormModel } from './lib/models';
 import { ClientAuthService } from './lib/services';
+
+/**
+ * Exported lib imports
+ */
 import { RedisModule, RedisService } from '@app/redis';
 
 @Module({})

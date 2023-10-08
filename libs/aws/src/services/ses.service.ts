@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { ConfigService } from "@nestjs/config";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
 @Injectable()
 export class SesService {

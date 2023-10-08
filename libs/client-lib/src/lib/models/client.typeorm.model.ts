@@ -1,3 +1,7 @@
+/**
+ * Concrete model for typeorm
+ */
+
 import { Entity as Model, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { ClientEntity } from '../entities/client.entity';
 
