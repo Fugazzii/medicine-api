@@ -1,10 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtSignOptions, JwtVerifyOptions, JwtService as NestJwtService } from "@nestjs/jwt";
-
-interface JwtPayload {
-    id: number;
-}
+import { JwtPayload } from "../interfaces";
 
 @Injectable()
 export class JwtService {

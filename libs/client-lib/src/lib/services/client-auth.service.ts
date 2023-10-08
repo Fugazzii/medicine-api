@@ -1,11 +1,11 @@
-import { Inject, Injectable, Scope } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ClientRepositoryInterface } from "../repositories";
 import { MAIL_SENDER_TOKEN, ORM_SOURCE_TOKEN } from "../tokens";
 import { SignUpClientDto } from "../dtos";
-import { MailSenderInterface } from "../providers";
 import { randomUUID } from "node:crypto";
 import { ConfigService } from "@nestjs/config";
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
+import { MailSenderInterface } from "@app/common";
 
 @Injectable()
 export class ClientAuthService {
@@ -50,7 +50,7 @@ export class ClientAuthService {
         }
 
         // Compare passwords
-        const isMatch = bcrypt.compare(password, client.password);
+        const isMatch = await bcrypt.compare(password, client.password);
         if(!isMatch) {
             throw new Error("Passwords do not match");
         }

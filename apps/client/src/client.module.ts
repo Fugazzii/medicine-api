@@ -19,18 +19,21 @@ import { JwtService } from "@app/common/lib/services";
  */
 import { ClientFormController, ClientAuthController, ClientDoctorController } from "./controllers";
 import { ClientAuthFacade } from "./facade";
+import { DatabaseModule } from "./database.module";
+import { RedisModule } from "@app/redis";
 
 @Module({
   imports: [
-    AwsModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    ClientLibModule.forRoot(MailSenderSource.AWS_SES, OrmSource.TYPEORM),
-    CommonModule
+    DatabaseModule.forRoot(MailSenderSource.AWS_SES, OrmSource.TYPEORM),
+    AwsModule,
+    CommonModule,
+    RedisModule
   ],
   providers: [
+    ConfigService,
     SesService,
     ClientAuthFacade,
-    ConfigService,
     JwtService
   ],
   controllers: [
