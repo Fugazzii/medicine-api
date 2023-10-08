@@ -72,6 +72,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/redis/tsconfig.lib.json"
       }
+    },
+    "forms-lib": {
+      "type": "library",
+      "root": "libs/forms-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/forms-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/forms-lib/tsconfig.lib.json"
+      }
     }
   }
 }

@@ -87,7 +87,8 @@
       "^@app/client-lib(|/.*)$": "<rootDir>/libs/client-lib/src/$1",
       "^@app/doctor-lib(|/.*)$": "<rootDir>/libs/doctor-lib/src/$1",
       "^@app/auth(|/.*)$": "<rootDir>/libs/auth/src/$1",
-      "^@app/redis(|/.*)$": "<rootDir>/libs/redis/src/$1"
+      "^@app/redis(|/.*)$": "<rootDir>/libs/redis/src/$1",
+      "^@app/forms-lib(|/.*)$": "<rootDir>/libs/forms-lib/src/$1"
     }
   }
 }

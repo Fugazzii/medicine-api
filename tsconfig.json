@@ -47,6 +47,12 @@
       ],
       "@app/redis/*": [
         "libs/redis/src/*"
+      ],
+      "@app/forms-lib": [
+        "libs/forms-lib/src"
+      ],
+      "@app/forms-lib/*": [
+        "libs/forms-lib/src/*"
       ]
     }
   }
