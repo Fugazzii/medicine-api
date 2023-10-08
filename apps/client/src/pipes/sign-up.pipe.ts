@@ -1,8 +1,12 @@
+/**
+ * Pipe to validate data
+ */
+
 import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from '@nestjs/common';
 import { ObjectSchema } from 'joi';
 
 @Injectable()
-export class JoiValidationPipe implements PipeTransform {
+export class SignUpClientValidationPipe implements PipeTransform {
   public constructor(private schema: ObjectSchema) {}
 
   public transform(value: any, metadata: ArgumentMetadata) {

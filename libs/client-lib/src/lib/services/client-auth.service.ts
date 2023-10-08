@@ -5,7 +5,7 @@ import { SignUpClientDto } from "../dtos";
 import { MailSenderInterface } from "../providers";
 import { randomUUID } from "node:crypto";
 import { ConfigService } from "@nestjs/config";
-import { ClientEntity } from "../entities";
+import bcrypt from "bcrypt";
 
 @Injectable()
 export class ClientAuthService {
@@ -50,7 +50,7 @@ export class ClientAuthService {
         }
 
         // Compare passwords
-        const isMatch = client.password === password;
+        const isMatch = bcrypt.compare(password, client.password);
         if(!isMatch) {
             throw new Error("Passwords do not match");
         }

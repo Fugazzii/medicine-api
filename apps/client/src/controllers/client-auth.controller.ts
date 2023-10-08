@@ -13,8 +13,8 @@ import { AuthClientGuard } from "@app/client-lib/lib/guards";
 /**
  * Local imports
  */
-import { JoiValidationPipe } from "../pipes";
 import { ClientAuthFacade } from "../facade";
+import { PasswordValidationPipe, SignUpClientValidationPipe } from "../pipes";
 
 @Controller()
 export class ClientAuthController {
@@ -25,7 +25,8 @@ export class ClientAuthController {
 
   @Post("/sign-up")
   @HttpCode(HttpStatus.OK)
-  @UsePipes(new JoiValidationPipe(SignUpClientSchema))
+  @UsePipes(new PasswordValidationPipe(SignUpClientSchema))
+  @UsePipes(new SignUpClientValidationPipe(SignUpClientSchema))
   public async signUp(@Body() signUpClientDto: SignUpClientDto) {
 
     await this.facade.signUpClient(signUpClientDto)
@@ -60,13 +61,8 @@ export class ClientAuthController {
     };
   }
 
-  @Get("/")
-  @UseGuards(AuthClientGuard)
-  public async protectedRoute() {
-    return "Works";
-  }
-
   @Post("/reset-password")
+  @UseGuards(AuthClientGuard)
   public async resetPassword() {}
 
   @Post("/reset-password/verify")
