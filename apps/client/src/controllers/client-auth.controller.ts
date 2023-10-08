@@ -15,7 +15,9 @@ import { AuthClientGuard } from "@app/client-lib/lib/guards";
  */
 import { ClientAuthFacade } from "../facade";
 import { PasswordValidationPipe, SignUpClientValidationPipe } from "../pipes";
+import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiTags } from "@nestjs/swagger";
 
+@ApiTags("Authorization")
 @Controller()
 export class ClientAuthController {
   
@@ -23,6 +25,9 @@ export class ClientAuthController {
     private readonly facade: ClientAuthFacade
   ) {}
 
+  @ApiOperation({ summary: "Sign Up", description: "Endpoint for client registration." })
+  @ApiConsumes("application/json")
+  @ApiBody({ type: SignUpClientDto })
   @Post("/sign-up")
   @HttpCode(HttpStatus.OK)
   @UsePipes(new PasswordValidationPipe(SignUpClientSchema))
@@ -37,6 +42,8 @@ export class ClientAuthController {
     };
   }
 
+  @ApiOperation({ summary: "Verify email", description: "Endpoint for verifying email." })
+  @ApiConsumes("application/json")
   @Get("/verify/:bytes")
   @HttpCode(HttpStatus.CREATED)
   public async verify(@Param("bytes") bytes: string) {
@@ -49,6 +56,9 @@ export class ClientAuthController {
     };
   }
 
+  @ApiOperation({ summary: "Sign Up", description: "Endpoint for client registration." })
+  @ApiConsumes("application/json")
+  @ApiBody({ type: SignInClientDto })
   @Post("/sign-in")
   public async signIn(@Body() signInClientDto: SignInClientDto) {
 
