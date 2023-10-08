@@ -24,7 +24,7 @@ export class ClientAuthFacade {
       }
 
       const bytes = await this.clientAuthService.sendVerificationLink(signUpClientDto);
-      await this.redisService.set(bytes, JSON.stringify(signUpClientDto));
+      await this.redisService.set(bytes, JSON.stringify(signUpClientDto), 1000 * 60 * 3);
 
     } catch (error) {
       console.error(error);
