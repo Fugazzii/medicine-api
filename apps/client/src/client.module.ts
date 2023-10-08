@@ -1,29 +1,27 @@
 import { Module } from "@nestjs/common";
-import { ClientFormController } from "./client-form.controller";
-import { ClientAuthController } from "./client-auth.controller";
-import { ClientDoctorController } from "./client-doctor.controller";
 import { AwsModule } from "@app/aws";
 import { SesService } from "@app/aws/services/ses.service";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ClientLibModule } from "@app/client-lib";
-import { OrmSource } from "@app/client-lib/lib/tokens";
-import { ClientAuthService } from "@app/client-lib/lib/services";
+import { MailSenderSource, OrmSource } from "@app/client-lib/lib/tokens";
+import { ClientAuthFacade } from "./facade";
+import { ClientFormController, ClientAuthController, ClientDoctorController } from "./controllers";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
     AwsModule,
-    ClientLibModule.forRoot(OrmSource.TYPEORM)
+    ConfigModule.forRoot({ isGlobal: true }),
+    ClientLibModule.forRoot(MailSenderSource.AWS_SES, OrmSource.TYPEORM)
+  ],
+  providers: [
+    SesService,
+    ClientAuthFacade,
+    ConfigService
   ],
   controllers: [
     ClientFormController,
     ClientAuthController,
     ClientDoctorController
-  ],
-  providers: [
-    SesService,
-    ConfigService,
-    ClientAuthService
   ]
 })
 export class ClientModule {}

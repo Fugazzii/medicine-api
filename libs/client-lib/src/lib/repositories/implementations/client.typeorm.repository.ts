@@ -19,9 +19,8 @@ export class ClientTypeormRepository implements ClientRepositoryInterface {
     public async findOne(id: number): Promise<ClientEntity>;
     public async findOne(email: string): Promise<ClientEntity>;
     public async findOne(arg: number | string): Promise<ClientEntity> {
-        
         const isEmail = typeof arg === "string";
-        
+
         return isEmail 
             ? this.repository.findOneBy({ email: arg }) 
             : this.repository.findOne({ where: { id: arg } }) 

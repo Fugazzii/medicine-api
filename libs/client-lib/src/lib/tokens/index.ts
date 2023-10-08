@@ -1,6 +1,2 @@
-export const ORM_SOURCE_TOKEN = Symbol("ORM_SOURCE_TOKEN");
-
-export enum OrmSource {
-    TYPEORM = "TYPEORM",
-    PRISMA = "PRISMA"
-}
+export * from "./orm.token";
+export * from "./mail-sender.token";

@@ -1,15 +1,19 @@
 import { Module, DynamicModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { OrmSource } from './lib/tokens';
-import { OrmProvider } from './lib/providers/orm.provider';
+import { MailSenderSource, OrmSource } from './lib/tokens';
+import { MailSenderProvider, OrmProvider } from './lib/providers';
 import { ClientTypeormRepository } from './lib/repositories';
 import { ClientTypeormModel } from './lib/models';
+import { ClientAuthService } from './lib/services';
+import { RedisModule, RedisService } from '@app/redis';
 
 @Module({})
 export class ClientLibModule {
-  static forRoot(ormSource: OrmSource): DynamicModule {
+  static forRoot(mailSenderSource: MailSenderSource, ormSource: OrmSource): DynamicModule {
     const ormProvider = OrmProvider.forRoot(ormSource);
+    const mailSenderProvider = MailSenderProvider.forRoot(mailSenderSource)
+
     return {
       module: ClientLibModule,
       imports: [
@@ -27,10 +31,23 @@ export class ClientLibModule {
           }),
           inject: [ConfigService]
         }),
-        TypeOrmModule.forFeature([ClientTypeormModel])
+        TypeOrmModule.forFeature([ClientTypeormModel]),
+        RedisModule
       ],
-      providers: [ormProvider, ClientTypeormRepository],
-      exports: [ormProvider, ClientTypeormRepository],
+      providers: [
+        ormProvider,
+        mailSenderProvider, 
+        ClientTypeormRepository, 
+        ClientAuthService, 
+        RedisService
+      ],
+      exports: [
+        ormProvider,
+        mailSenderProvider,
+        ClientTypeormRepository,
+        ClientAuthService,
+        RedisService
+      ]
     };
   }
 }
