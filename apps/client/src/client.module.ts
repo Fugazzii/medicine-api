@@ -11,6 +11,8 @@ import { ClientLibModule } from "@app/client-lib";
 import { MailSenderSource, OrmSource } from "@app/client-lib/lib/tokens";
 import { AwsModule } from "@app/aws";
 import { SesService } from "@app/aws/services/ses.service";
+import { CommonModule } from "@app/common";
+import { JwtService } from "@app/common/lib/services";
 
 /**
  * Local imports
@@ -22,12 +24,14 @@ import { ClientAuthFacade } from "./facade";
   imports: [
     AwsModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    ClientLibModule.forRoot(MailSenderSource.AWS_SES, OrmSource.TYPEORM)
+    ClientLibModule.forRoot(MailSenderSource.AWS_SES, OrmSource.TYPEORM),
+    CommonModule
   ],
   providers: [
     SesService,
     ClientAuthFacade,
-    ConfigService
+    ConfigService,
+    JwtService
   ],
   controllers: [
     ClientFormController,

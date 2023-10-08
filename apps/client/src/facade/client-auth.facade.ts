@@ -7,15 +7,17 @@ import { Injectable } from "@nestjs/common";
  * Lib imports
  */
 import { RedisService } from "@app/redis";
-import { SignUpClientDto } from "@app/client-lib/lib/dtos";
+import { SignInClientDto, SignUpClientDto } from "@app/client-lib/lib/dtos";
 import { ClientAuthService } from "@app/client-lib/lib/services";
+import { JwtService } from "@app/common/lib/services";
 
 @Injectable()
 export class ClientAuthFacade {
 
   public constructor(
     private readonly clientAuthService: ClientAuthService,
-    private readonly redisService: RedisService
+    private readonly redisService: RedisService,
+    private readonly jwtService: JwtService
   ) {}
 
   public async signUpClient(signUpClientDto: SignUpClientDto): Promise<void> {
@@ -36,21 +38,50 @@ export class ClientAuthFacade {
   }
 
   public async verifyClient(bytes: string): Promise<void> {
-    const signUpOptionsStringed = await this.redisService.get(bytes);
-    const signUpOptions = await JSON.parse(signUpOptionsStringed);
+    try {
+      const signUpOptionsStringed = await this.redisService.get(bytes);
+      const signUpOptions = await JSON.parse(signUpOptionsStringed);
+  
+      if(!signUpOptions) {
+        throw new Error("Not found");
+      }
+  
+      await this.clientAuthService.addNewClient(signUpOptions);        
+    } catch (error) {
+      console.error(`Failed to verify client: ${error}`);
+      throw error;
+    }
+  }
 
-    if(!signUpOptions) {
-      throw new Error("Not found");
+  public async signInClient(signInClientDto: SignInClientDto) {
+
+    try {
+      const id = await this.clientAuthService.passwordsMatch(signInClientDto.email, signInClientDto.password);
+      const token = await this.jwtService.signInStrategy(id);
+
+      return {
+        data: token,
+        success: true,
+        message: "Signed in successfully"
+      };
+    } catch (error) {
+      console.error(`Failed to sign in ${error}`);
+      return {
+        data: null,
+        success: false,
+        message: "Invalid Credentials"
+      }      
     }
 
-    await this.clientAuthService.addNewClient(signUpOptions);
+    
+
   }
 }
 
 /**
 curl -X POST -H "Content-Type: application/json" -d '{
   "private_id": "12345678901",
-  "email": "example@example.com",
+  "email": "sichinavailia@gmail.com",
   "password": "ILia#uteslisesi123",
   "age": 30
 }' http://localhost:3001/api/client/sign-up

@@ -7,7 +7,7 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, UsePipes } fr
  * Lib imports
  */
 import { SignUpClientSchema } from "@app/client-lib/lib/schemas";
-import { SignUpClientDto } from "@app/client-lib/lib/dtos";
+import { SignInClientDto, SignUpClientDto } from "@app/client-lib/lib/dtos";
 
 /**
  * Local imports
@@ -21,9 +21,6 @@ export class ClientAuthController {
   public constructor(
     private readonly facade: ClientAuthFacade
   ) {}
-
-  @Post("/sign-in")
-  public async signIn() {}
 
   @Post("/sign-up")
   @HttpCode(HttpStatus.OK)
@@ -47,6 +44,18 @@ export class ClientAuthController {
     return {
       success: true,
       message: "Successfully added new user"
+    };
+  }
+
+  @Post("/sign-in")
+  public async signIn(@Body() signInClientDto: SignInClientDto) {
+
+    const token = await this.facade.signInClient(signInClientDto);
+
+    return {
+      success: true,
+      message: "Signed in client",
+      data: token
     };
   }
 

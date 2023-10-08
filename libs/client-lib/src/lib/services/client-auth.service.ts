@@ -5,6 +5,7 @@ import { SignUpClientDto } from "../dtos";
 import { MailSenderInterface } from "../providers";
 import { randomUUID } from "node:crypto";
 import { ConfigService } from "@nestjs/config";
+import { ClientEntity } from "../entities";
 
 @Injectable()
 export class ClientAuthService {
@@ -36,6 +37,23 @@ export class ClientAuthService {
         );
 
         return bytes;
+    }
+
+    public async passwordsMatch(email: string, password: string): Promise<number> {
+        
+        // Check if clients exists
+        const client = await this.clientRepository.findOne(email);
+        if(!client) {
+            throw new Error("Client is not registered");
+        }
+
+        // Compare passwords
+        const isMatch = client.password === password;
+        if(!isMatch) {
+            throw new Error("Passwords do not match");
+        }
+
+        return client.id;
     }
 
 }
