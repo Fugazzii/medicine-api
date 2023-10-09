@@ -90,6 +90,33 @@
       "compilerOptions": {
         "tsConfigPath": "libs/facade/tsconfig.lib.json"
       }
+    },
+    "country-lib": {
+      "type": "library",
+      "root": "libs/country-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/country-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/country-lib/tsconfig.lib.json"
+      }
+    },
+    "city-lib": {
+      "type": "library",
+      "root": "libs/city-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/city-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/city-lib/tsconfig.lib.json"
+      }
+    },
+    "specialty-lib": {
+      "type": "library",
+      "root": "libs/specialty-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/specialty-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/specialty-lib/tsconfig.lib.json"
+      }
     }
   }
 }

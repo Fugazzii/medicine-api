@@ -59,6 +59,24 @@
       ],
       "@app/facade/*": [
         "libs/facade/src/*"
+      ],
+      "@app/country-lib": [
+        "libs/country-lib/src"
+      ],
+      "@app/country-lib/*": [
+        "libs/country-lib/src/*"
+      ],
+      "@app/city-lib": [
+        "libs/city-lib/src"
+      ],
+      "@app/city-lib/*": [
+        "libs/city-lib/src/*"
+      ],
+      "@app/specialty-lib": [
+        "libs/specialty-lib/src"
+      ],
+      "@app/specialty-lib/*": [
+        "libs/specialty-lib/src/*"
       ]
     }
   }

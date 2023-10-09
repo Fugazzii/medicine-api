@@ -2,8 +2,9 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post
 import { CreateFormDto } from "@app/forms-lib";
 import { ClientFormService } from "@app/forms-lib";
 import { AuthClientGuard } from "@app/client-lib/lib/guards";
-import { ApiOperation, ApiConsumes, ApiBody } from "@nestjs/swagger";
+import { ApiOperation, ApiConsumes, ApiBody, ApiTags } from "@nestjs/swagger";
 
+@ApiTags("Forms")
 @Controller()
 export class ClientFormController {
   

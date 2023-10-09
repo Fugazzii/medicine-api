@@ -89,7 +89,13 @@
       "^@app/auth(|/.*)$": "<rootDir>/libs/auth/src/$1",
       "^@app/redis(|/.*)$": "<rootDir>/libs/redis/src/$1",
       "^@app/forms-lib(|/.*)$": "<rootDir>/libs/forms-lib/src/$1",
-      "^@app/facade(|/.*)$": "<rootDir>/libs/facade/src/$1"
+      "^@app/facade(|/.*)$": "<rootDir>/libs/facade/src/$1",
+      "^@app/countries(|/.*)$": "<rootDir>/libs/countries/src/$1",
+      "^@app/cities(|/.*)$": "<rootDir>/libs/cities/src/$1",
+      "^@app/country(|/.*)$": "<rootDir>/libs/country/src/$1",
+      "^@app/country-lib(|/.*)$": "<rootDir>/libs/country-lib/src/$1",
+      "^@app/city-lib(|/.*)$": "<rootDir>/libs/city-lib/src/$1",
+      "^@app/specialty-lib(|/.*)$": "<rootDir>/libs/specialty-lib/src/$1"
     }
   }
 }
