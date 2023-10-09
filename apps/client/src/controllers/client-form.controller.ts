@@ -2,13 +2,16 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post
 import { CreateFormDto } from "@app/forms-lib";
 import { ClientFormService } from "@app/forms-lib";
 import { AuthClientGuard } from "@app/client-lib/lib/guards";
-import { ApiOperation, ApiConsumes, ApiBody, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiConsumes, ApiBody, ApiTags, ApiBearerAuth } from "@nestjs/swagger";
 
 @ApiTags("Forms")
+@ApiBearerAuth()
 @Controller()
 export class ClientFormController {
   
-  public constructor(private readonly clientFormService: ClientFormService) {}
+  public constructor(
+    private readonly clientFormService: ClientFormService
+  ) {}
 
   @ApiOperation({ summary: "Get all forms of a client", description: "Endpoint viewing client forms" })
   @ApiConsumes("application/json")
@@ -32,6 +35,8 @@ export class ClientFormController {
       };
     }
   }
+
+  
 
   @ApiOperation({ summary: "Get single form", description: "Endpoint for retrieving form by id." })
   @ApiConsumes("application/json")

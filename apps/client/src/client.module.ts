@@ -21,6 +21,8 @@ import { DatabaseModule } from "./database/database.module";
 import { RedisModule } from "@app/redis";
 import { FacadeModule } from "@app/facade";
 import { ClientFormService, FormsLibModule } from "@app/forms-lib";
+import { AuthClientGuard } from "@app/client-lib/lib/guards";
+import { ClientAuthService } from "@app/client-lib/lib/services";
 
 @Module({
   imports: [
@@ -30,12 +32,13 @@ import { ClientFormService, FormsLibModule } from "@app/forms-lib";
     CommonModule,
     RedisModule,
     FacadeModule,
-    FormsLibModule
+    FormsLibModule,
+    ClientLibModule
   ],
   providers: [
     ConfigService,
     SesService,
-    ClientFormService,
+    ClientFormService
   ],
   controllers: [
     ClientFormController,
