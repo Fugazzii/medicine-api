@@ -53,6 +53,12 @@
       ],
       "@app/forms-lib/*": [
         "libs/forms-lib/src/*"
+      ],
+      "@app/facade": [
+        "libs/facade/src"
+      ],
+      "@app/facade/*": [
+        "libs/facade/src/*"
       ]
     }
   }

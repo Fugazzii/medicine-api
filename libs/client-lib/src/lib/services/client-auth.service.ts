@@ -1,17 +1,16 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ClientRepositoryInterface } from "../repositories";
-import { MAIL_SENDER_TOKEN, ORM_SOURCE_TOKEN } from "../tokens";
+import { CLIENT_REPOSITORY_TOKEN, ClientRepositoryInterface } from "../repositories";
 import { SignUpClientDto } from "../dtos";
 import { randomUUID } from "node:crypto";
 import { ConfigService } from "@nestjs/config";
 import * as bcrypt from "bcrypt";
-import { MailSenderInterface } from "@app/common";
+import { MAIL_SENDER_TOKEN, MailSenderInterface } from "@app/common";
 
 @Injectable()
 export class ClientAuthService {
 
     public constructor(
-        @Inject(ORM_SOURCE_TOKEN) private readonly clientRepository: ClientRepositoryInterface,
+        @Inject(CLIENT_REPOSITORY_TOKEN) private readonly clientRepository: ClientRepositoryInterface,
         @Inject(MAIL_SENDER_TOKEN) private readonly mailSenderService: MailSenderInterface,
         private readonly configService: ConfigService
     ) {}

@@ -1,5 +1,5 @@
 import { SesService } from "@app/aws";
-import { MailSenderSource, MAIL_SENDER_TOKEN } from "@app/client-lib/lib/tokens";
+import { MailSenderSource, MAIL_SENDER_TOKEN } from "@app/common/lib/tokens";
 
 const mailSenderToMailService = {
     "AWS_SES": SesService,

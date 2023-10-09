@@ -81,6 +81,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/forms-lib/tsconfig.lib.json"
       }
+    },
+    "facade": {
+      "type": "library",
+      "root": "libs/facade",
+      "entryFile": "index",
+      "sourceRoot": "libs/facade/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/facade/tsconfig.lib.json"
+      }
     }
   }
 }

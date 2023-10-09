@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FormTypeormEntity } from "../../models";
+import { FormTypeormModel } from "../../models";
 import { FormRepositoryInterface } from "../form.repository.interface";
 import { FormEntity } from "../../entities";
 import { Repository } from "typeorm";
@@ -9,7 +9,7 @@ import { Repository } from "typeorm";
 export class FormTypeormRepository implements FormRepositoryInterface {
 
     public constructor(
-        @InjectRepository(FormTypeormEntity) private readonly repository: Repository<FormTypeormEntity>
+        @InjectRepository(FormTypeormModel) private readonly repository: Repository<FormTypeormModel>
     ) {}
 
     public async create(newForm: Omit<FormEntity, "id">): Promise<void> {
@@ -26,6 +26,12 @@ export class FormTypeormRepository implements FormRepositoryInterface {
         if(!target) return;
 
         this.repository.delete(target);
+    }
+
+    public async findAll(id: number): Promise<Array<FormEntity>> {
+        return this.repository.find({
+            where: { id }
+        });
     }
 
 }

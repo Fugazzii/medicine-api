@@ -2,7 +2,7 @@ import { Column, Entity as Model, PrimaryGeneratedColumn } from "typeorm";
 import { FormEntity } from "../entities";
 
 @Model("forms")
-export class FormTypeormEntity implements FormEntity {
+export class FormTypeormModel implements FormEntity {
     @PrimaryGeneratedColumn()
     public id: number;
 

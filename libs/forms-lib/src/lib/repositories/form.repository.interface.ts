@@ -6,4 +6,5 @@ export interface FormRepositoryInterface {
     create(newForm: Omit<FormEntity, "id">): Promise<void>;
     findOne(id: number): Promise<FormEntity>;
     deleteOne(id: number): Promise<void>;
+    findAll(id: number): Promise<Array<FormEntity>>
 }

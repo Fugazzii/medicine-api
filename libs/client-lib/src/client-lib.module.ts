@@ -6,7 +6,7 @@ import { Module } from '@nestjs/common';
 /**
  * Local lib imports
  */
-import { ClientTypeormRepository } from './lib/repositories';
+import { CLIENT_REPOSITORY_TOKEN, ClientTypeormRepository } from './lib/repositories';
 import { ClientAuthService } from './lib/services';
 
 /**
@@ -14,18 +14,25 @@ import { ClientAuthService } from './lib/services';
  */
 import { RedisService } from '@app/redis';
 import { AuthClientGuard } from './lib/guards/';
-import { JwtService } from '@app/common';
+import { JwtService, MailSenderProvider, MailSenderSource } from '@app/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ClientTypeormModel } from './lib/models';
 
 @Module({
-  imports: [],
+  imports: [
+    TypeOrmModule.forFeature([ClientTypeormModel])
+  ],
   providers: [
     ClientTypeormRepository,
-    ClientAuthService,
     JwtService,
     AuthClientGuard,
-    RedisService
+    RedisService,
+    ClientAuthService,
+    MailSenderProvider.forRoot(MailSenderSource.AWS_SES),
+    { provide: CLIENT_REPOSITORY_TOKEN, useClass: ClientTypeormRepository},
   ],
   exports: [
+    { provide: CLIENT_REPOSITORY_TOKEN, useClass: ClientTypeormRepository},
     ClientAuthService,
     AuthClientGuard
   ]
