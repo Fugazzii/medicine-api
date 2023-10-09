@@ -10,11 +10,11 @@ import { FormTypeormModel } from './lib/models';
   ],
   providers: [
     ClientFormService,
-    { provide: FORM_REPOSITORY_TOKEN, useClass: FormTypeormRepository }
+    { provide: FORM_REPOSITORY_TOKEN, useClass: FormTypeormRepository },
   ],
   exports: [
     ClientFormService,
-    { provide: FORM_REPOSITORY_TOKEN, useClass: FormTypeormRepository }
+    FORM_REPOSITORY_TOKEN
   ]
 })
 export class FormsLibModule {}

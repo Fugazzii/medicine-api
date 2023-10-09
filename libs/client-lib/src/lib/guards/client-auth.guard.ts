@@ -1,6 +1,5 @@
-import { ExecutionContext, Injectable } from "@nestjs/common";
+import { ExecutionContext, Inject, Injectable } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { Observable } from "rxjs";
 import { ClientAuthService } from "../services";
 import { JwtService } from "@app/common/lib/services";
 
@@ -15,10 +14,10 @@ export class AuthClientGuard extends AuthGuard("bearer") {
     }
 
     public async canActivate(context: ExecutionContext) {
-        const request = context.switchToHttp().getRequest();
-        const token = request.headers.authorization?.split(' ')[1];
+        const request = await context.switchToHttp().getRequest();
+        const token = await request.headers.authorization?.split(' ')[1];
         const { id } = await this.jwtService.verifyTokenStrategy(token);
-
+        
         return this.clientService.clientExists(id);
     }
     

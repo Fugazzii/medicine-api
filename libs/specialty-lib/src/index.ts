@@ -1,2 +1,4 @@
 export * from './specialty-lib.module';
-export * from './specialty-lib.service';
+export * from "./lib/entities";
+export * from "./lib/models";
+export * from "./lib/repositories";

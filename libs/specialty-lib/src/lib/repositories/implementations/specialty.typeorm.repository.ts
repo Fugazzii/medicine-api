@@ -3,7 +3,9 @@ import { SpecialtyTypeormModel } from "../../models";
 import { Repository } from "typeorm";
 import { SpecialtyRepositoryInterface } from "../specialty.repository.interface";
 import { SpecialtyEntity } from "../../entities";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class SpecialtyTypeormRepository implements SpecialtyRepositoryInterface {
     
     private readonly specialtyNames: Array<string>;
@@ -35,8 +37,7 @@ export class SpecialtyTypeormRepository implements SpecialtyRepositoryInterface 
             "Urologist"
         ];
         
-        this
-            .initialize()
+        this.initialize()
             .then(() => {})
             .catch(err => console.error(`Error in specialty repository ${err}`))
     }
@@ -49,6 +50,7 @@ export class SpecialtyTypeormRepository implements SpecialtyRepositoryInterface 
             const query = `INSERT INTO specialties (name) VALUES ${this.specialtyNames.map(name => `('${name}')`).join(", ")}`;
             await this.repository.query(query);
         } catch (error) {
+            console.error(error);
             throw error;
         }
     }

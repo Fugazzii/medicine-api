@@ -30,18 +30,6 @@ services:
       - 5433:5432
     volumes:
       - postgres_clients:/var/lib/postgresql/data
-  
-  # Postgres doctors
-  # postgres_doctors:
-  #   image: postgres
-  #   ports:
-  #     - 5432:5433
-  #   environment:
-  #     POSTGRES_USER: ilia
-  #     POSTGRES_DB: doctors
-  #     POSTGRES_PASSWORD: iliamagaria
-  #   volumes:
-  #     - postgres_doctors:/var/lib/postgresql/data
 
   # REDIS
   redis:
