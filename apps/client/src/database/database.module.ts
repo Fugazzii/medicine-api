@@ -7,10 +7,14 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 /**
  * Lib imports
  */
-import { ClientTypeormModel } from "@app/client-lib/lib/models";
 import { MailSenderSource } from "@app/common/lib/tokens";
 import { MailSenderProvider } from "@app/common/lib/providers";
 import { databaseConfig } from "./database.config";
+import { ClientTypeormModel } from "@app/client-lib/lib/models";
+import { FormTypeormModel } from "@app/forms-lib";
+import { SpecialtyTypeormModel } from "@app/specialty-lib";
+import { CityTypeormModel } from "@app/city-lib";
+import { CountryTypeormModel } from "@app/country-lib";
 
 @Module({})
 export class DatabaseModule {
@@ -20,7 +24,16 @@ export class DatabaseModule {
       return {
         module: DatabaseModule,
         imports: [
-          TypeOrmModule.forRoot({...databaseConfig, entities: [ClientTypeormModel]})
+          TypeOrmModule.forRoot({
+            ...databaseConfig,
+            entities: [
+              ClientTypeormModel, 
+              FormTypeormModel, 
+              SpecialtyTypeormModel, 
+              CityTypeormModel, 
+              CountryTypeormModel
+            ]
+          })
         ],
         providers: [mailSenderProvider],
         exports: [mailSenderProvider]

@@ -29,14 +29,13 @@ import { ClientFormService, FormsLibModule } from "@app/forms-lib";
     AwsModule,
     CommonModule,
     RedisModule,
-    ClientLibModule,
     FacadeModule,
     FormsLibModule
   ],
   providers: [
     ConfigService,
     SesService,
-    ClientFormService
+    ClientFormService,
   ],
   controllers: [
     ClientFormController,
