@@ -3,7 +3,9 @@ import { Repository } from "typeorm";
 import { CountryEntity } from "../../entities";
 import { CountryRepositoryInterface } from "../country.repository.interface";
 import { CountryTypeormModel } from "../../models";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class CountryTypeormRepository implements CountryRepositoryInterface {
     
     private readonly countryNames: Array<string>;
@@ -62,6 +64,7 @@ export class CountryTypeormRepository implements CountryRepositoryInterface {
             "Dominica",
             "Dominican Republic",
             "East Timor (Timor-Leste)",
+            "Georgia"
         ];
 
         this
