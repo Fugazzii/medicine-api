@@ -15,5 +15,5 @@ export class FormTypeormModel implements FormEntity {
     public description: string;
 
     @ManyToOne(() => SpecialtyTypeormModel, (specialty: SpecialtyTypeormModel) => specialty.id)
-    public relevant_specialist_id: number;
+    public relevant_specialist: number;
 }

@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Req, UseGuards } from "@nestjs/common";
 import { CreateFormDto } from "@app/forms-lib";
-import { ClientFormService } from "@app/forms-lib";
 import { AuthClientGuard } from "@app/client-lib/lib/guards";
 import { ApiOperation, ApiConsumes, ApiBody, ApiTags, ApiBearerAuth } from "@nestjs/swagger";
+import { ClientFormFacade } from "@app/facade/client-form.facade";
+import { Request } from "express";
 
 @ApiTags("Forms")
 @ApiBearerAuth()
@@ -10,7 +11,7 @@ import { ApiOperation, ApiConsumes, ApiBody, ApiTags, ApiBearerAuth } from "@nes
 export class ClientFormController {
   
   public constructor(
-    private readonly clientFormService: ClientFormService
+    private readonly facade: ClientFormFacade
   ) {}
 
   @ApiOperation({ summary: "Get all forms of a client", description: "Endpoint viewing client forms" })
@@ -20,7 +21,7 @@ export class ClientFormController {
   @UseGuards(AuthClientGuard)
   public async getAllForms(@Param("id") id: number) {
     try {
-      const result = await this.clientFormService.getForms(id);
+      const result = null;
 
       return {
         data: result,
@@ -45,7 +46,7 @@ export class ClientFormController {
   @UseGuards(AuthClientGuard)
   public async getForm(@Param("id") id: number) {
     try {
-      const result = await this.clientFormService.getFormById(id);
+      const result = null;
 
       return {
         data: result,
@@ -67,9 +68,12 @@ export class ClientFormController {
   @Post("/form")
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(AuthClientGuard)
-  public async createForm(@Body() createFormDto: CreateFormDto) {
+  // Might be problem here in req
+  public async createForm(@Body() createFormDto: CreateFormDto, @Req() req: Request) {
     try {
-      const result = await this.clientFormService.createForm(createFormDto);
+      const token = req.headers.authorization?.split(' ')[1];
+      console.log("Token", token);
+      const result = await this.facade.createForm(createFormDto, token);
 
       return {
         data: result,
@@ -92,7 +96,7 @@ export class ClientFormController {
   @UseGuards(AuthClientGuard)
   public async deleteForm(@Param("id") id: number) {
     try {
-      const result = await this.clientFormService.deleteForm(id);
+      const result = null;
 
       return {
         data: result,

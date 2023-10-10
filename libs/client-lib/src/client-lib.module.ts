@@ -17,7 +17,6 @@ import { AuthClientGuard } from './lib/guards/';
 import { JwtService, MailSenderProvider, MailSenderSource } from '@app/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientTypeormModel } from './lib/models';
-import { SpecialtyLibModule } from '@app/specialty-lib';
 
 @Module({
   imports: [

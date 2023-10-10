@@ -1,5 +1,5 @@
 export interface CityEntity {
     id: number;
-    country_id: number;
+    country: number;
     name: string;
 }
