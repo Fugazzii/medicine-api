@@ -9,7 +9,7 @@ export class FormTypeormModel implements FormEntity {
     public id: number;
 
     @ManyToOne(() => ClientTypeormModel, (client: ClientTypeormModel) => client.id)
-    public client_id: number;
+    public client: number;
 
     @Column({ type: "varchar", length: 5096, nullable: false })
     public description: string;

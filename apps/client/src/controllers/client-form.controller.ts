@@ -16,12 +16,13 @@ export class ClientFormController {
 
   @ApiOperation({ summary: "Get all forms of a client", description: "Endpoint viewing client forms" })
   @ApiConsumes("application/json")
-  @Get("/forms/:id")
+  @Get("/forms")
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthClientGuard)
-  public async getAllForms(@Param("id") id: number) {
+  public async getAllForms(@Req() req: Request) {
     try {
-      const result = null;
+      const token = req.headers.authorization?.split(' ')[1];
+      const result = await this.facade.getForms(token);
 
       return {
         data: result,
@@ -37,8 +38,6 @@ export class ClientFormController {
     }
   }
 
-  
-
   @ApiOperation({ summary: "Get single form", description: "Endpoint for retrieving form by id." })
   @ApiConsumes("application/json")
   @Get("/form/:id")
@@ -46,7 +45,7 @@ export class ClientFormController {
   @UseGuards(AuthClientGuard)
   public async getForm(@Param("id") id: number) {
     try {
-      const result = null;
+      const result = await this.facade.getFormById(id);
 
       return {
         data: result,
@@ -68,11 +67,9 @@ export class ClientFormController {
   @Post("/form")
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(AuthClientGuard)
-  // Might be problem here in req
   public async createForm(@Body() createFormDto: CreateFormDto, @Req() req: Request) {
     try {
       const token = req.headers.authorization?.split(' ')[1];
-      console.log("Token", token);
       const result = await this.facade.createForm(createFormDto, token);
 
       return {
@@ -96,7 +93,7 @@ export class ClientFormController {
   @UseGuards(AuthClientGuard)
   public async deleteForm(@Param("id") id: number) {
     try {
-      const result = null;
+      const result = await this.facade.deleteForm(id);
 
       return {
         data: result,

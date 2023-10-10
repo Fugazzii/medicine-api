@@ -21,8 +21,8 @@ export class ClientFormService {
         return this.formRepository.findOne(id); 
     }
 
-    public getForms(id: number) {
-        return this.formRepository.findAll(id);
+    public getForms(client_id: number) {
+        return this.formRepository.findAll(client_id);
     }
 
 }

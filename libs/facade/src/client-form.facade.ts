@@ -16,9 +16,23 @@ export class ClientFormFacade {
         const specialist_id = await this.specialtyService.getIdByName(createFormDto.relevant_specialist_name);
 
         return this.formService.createForm({
-            client_id: id,
+            client: id,
             description: createFormDto.description,
             relevant_specialist: specialist_id
         });
+    }
+
+    public async getForms(token: string) {
+        const { id } = await this.jwtService.verifyTokenStrategy(token);
+
+        return this.formService.getForms(id);
+    }
+
+    public getFormById(id: number) {
+        return this.formService.getFormById(id);
+    }
+
+    public deleteForm(id: number) {
+        return this.formService.deleteForm(id);
     }
 }
