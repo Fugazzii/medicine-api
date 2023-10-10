@@ -95,7 +95,8 @@
       "^@app/country(|/.*)$": "<rootDir>/libs/country/src/$1",
       "^@app/country-lib(|/.*)$": "<rootDir>/libs/country-lib/src/$1",
       "^@app/city-lib(|/.*)$": "<rootDir>/libs/city-lib/src/$1",
-      "^@app/specialty-lib(|/.*)$": "<rootDir>/libs/specialty-lib/src/$1"
+      "^@app/specialty-lib(|/.*)$": "<rootDir>/libs/specialty-lib/src/$1",
+      "^@app/specialty(|/.*)$": "<rootDir>/libs/specialty/src/$1"
     }
   }
 }

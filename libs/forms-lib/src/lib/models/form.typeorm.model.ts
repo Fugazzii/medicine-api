@@ -1,6 +1,6 @@
 import { Column, JoinColumn, ManyToOne, Entity as Model, PrimaryGeneratedColumn } from "typeorm";
 import { FormEntity } from "../entities";
-import { SpecialtyTypeormModel } from "@app/specialty-lib/lib/models";
+import { SpecialtyTypeormModel } from "@app/specialty";
 import { ClientTypeormModel } from "@app/client-lib/lib/models";
 
 @Model("forms")

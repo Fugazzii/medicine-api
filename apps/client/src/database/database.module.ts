@@ -12,7 +12,7 @@ import { MailSenderProvider } from "@app/common/lib/providers";
 import { databaseConfig } from "./database.config";
 import { ClientTypeormModel } from "@app/client-lib/lib/models";
 import { FormTypeormModel } from "@app/forms-lib";
-import { SpecialtyTypeormModel } from "@app/specialty-lib";
+import { SpecialtyTypeormModel } from "@app/specialty";
 import { CityTypeormModel } from "@app/city-lib";
 import { CountryTypeormModel } from "@app/country-lib";
 

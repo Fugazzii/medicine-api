@@ -1,20 +1,20 @@
 import { Module } from '@nestjs/common';
+import { SpecialtyService } from './specialty.service';
+import { SPECIALTY_REPOSITORY_TOKEN, SpecialtyTypeormRepository } from './lib/repositories';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SpecialtyTypeormModel } from './lib/models';
-import { SPECIALTY_REPOSITORY_TOKEN, SpecialtyTypeormRepository } from '.';
-import { SpecialtyService } from './specialty-lib.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([SpecialtyTypeormModel])
   ],
   providers: [
-    { provide: SPECIALTY_REPOSITORY_TOKEN, useClass: SpecialtyTypeormRepository },
-    SpecialtyService
+    SpecialtyService,
+    { provide: SPECIALTY_REPOSITORY_TOKEN, useClass: SpecialtyTypeormRepository }
   ],
   exports: [
     SpecialtyService,
     SPECIALTY_REPOSITORY_TOKEN
-  ]
+  ],
 })
-export class SpecialtyLibModule {}
+export class SpecialtyModule {}

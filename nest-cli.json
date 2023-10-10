@@ -109,13 +109,13 @@
         "tsConfigPath": "libs/city-lib/tsconfig.lib.json"
       }
     },
-    "specialty-lib": {
+    "specialty": {
       "type": "library",
-      "root": "libs/specialty-lib",
+      "root": "libs/specialty",
       "entryFile": "index",
-      "sourceRoot": "libs/specialty-lib/src",
+      "sourceRoot": "libs/specialty/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/specialty-lib/tsconfig.lib.json"
+        "tsConfigPath": "libs/specialty/tsconfig.lib.json"
       }
     }
   }

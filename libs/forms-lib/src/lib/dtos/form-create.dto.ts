@@ -7,6 +7,6 @@ export class CreateFormDto {
     @ApiProperty({ example: "this is desc" })
     public description: string;
 
-    @ApiProperty({ example: 1 })
-    public relevant_specialist_id: number;
+    @ApiProperty({ example: "Cardiologist" })
+    public relevant_specialist_name: string;
 }
