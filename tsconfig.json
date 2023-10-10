@@ -77,6 +77,12 @@
       ],
       "@app/specialty/*": [
         "libs/specialty/src/*"
+      ],
+      "@app/database": [
+        "libs/database/src"
+      ],
+      "@app/database/*": [
+        "libs/database/src/*"
       ]
     }
   }

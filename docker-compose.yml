@@ -18,10 +18,20 @@ services:
       - 3001:3001
 
   # Doctor microservice
-  # doctor:
-  #   build:
-  #     context: ./
-  #     dockerfile: ./apps/doctor
+  doctor:
+    build:
+      context: ./
+      dockerfile: ./apps/doctor/Dockerfile
+    env_file:
+      - ./apps/doctor/.env
+    depends_on:
+      - postgres_clients
+      - redis
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
   
   # Postgres clients
   postgres_clients:

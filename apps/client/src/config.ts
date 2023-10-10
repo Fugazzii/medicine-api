@@ -1,12 +1,4 @@
-type config = {
-    type: "postgres",
-    username: string,
-    password: string,
-    database: string,
-    host: string,
-    port: number,
-    synchronize: true
-}
+import { config } from "@app/database";
 
 export const databaseConfig: config = {
     type: "postgres",

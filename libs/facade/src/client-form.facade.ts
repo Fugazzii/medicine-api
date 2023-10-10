@@ -23,16 +23,17 @@ export class ClientFormFacade {
     }
 
     public async getForms(token: string) {
+        // client id
         const { id } = await this.jwtService.verifyTokenStrategy(token);
-
+        
         return this.formService.getForms(id);
     }
 
-    public getFormById(id: number) {
-        return this.formService.getFormById(id);
+    public getFormById(formId: number) {
+        return this.formService.getFormById(formId);
     }
 
-    public deleteForm(id: number) {
-        return this.formService.deleteForm(id);
+    public deleteForm(formId: number) {
+        return this.formService.deleteForm(formId);
     }
 }
