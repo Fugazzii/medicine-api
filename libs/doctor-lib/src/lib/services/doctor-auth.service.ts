@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientRepositoryInterface } from '@app/client-lib/lib/repositories';
+import { ClientRepositoryInterface } from '@app/client-lib';
 import { randomUUID } from 'node:crypto';
 import { MAIL_SENDER_TOKEN, MailSenderInterface } from '@app/common';
 import { ConfigService } from '@nestjs/config';

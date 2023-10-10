@@ -21,9 +21,7 @@ import { ClientAuthFacade } from "@app/facade";
 @Controller()
 export class ClientAuthController {
   
-  public constructor(
-    private readonly facade: ClientAuthFacade
-  ) {}
+  public constructor(private readonly facade: ClientAuthFacade) {}
 
   @ApiOperation({ summary: "Sign Up", description: "Endpoint for client registration." })
   @ApiConsumes("application/json")
