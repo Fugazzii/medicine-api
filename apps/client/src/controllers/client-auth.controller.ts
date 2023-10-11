@@ -13,9 +13,10 @@ import { AuthClientGuard } from "@app/client-lib/lib/guards";
 /**
  * Local imports
  */
-import { PasswordValidationPipe, SignUpClientValidationPipe } from "../pipes";
-import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiTags } from "@nestjs/swagger";
+import { SignUpClientValidationPipe } from "../pipes";
+import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ClientAuthFacade } from "@app/facade";
+import { PasswordValidationPipe } from "@app/common";
 
 @ApiTags("Authorization")
 @Controller()

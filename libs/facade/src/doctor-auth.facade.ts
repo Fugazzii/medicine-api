@@ -8,7 +8,9 @@ import { Injectable } from "@nestjs/common";
  */
 import { RedisService } from "@app/redis";
 import { JwtService } from "@app/common";
-import { CreateDoctorDto, DoctorAuthService, SignInDoctorDto } from "@app/doctor-lib";
+import { CreateDoctorDto, DoctorAuthService, DoctorEntity, SignInDoctorDto } from "@app/doctor-lib";
+import { SpecialtyService } from "@app/specialty";
+import { CityLibService } from "@app/city-lib";
 
 @Injectable()
 export class DoctorAuthFacade {
@@ -16,24 +18,30 @@ export class DoctorAuthFacade {
   public constructor(
     private readonly doctorAuthService: DoctorAuthService,
     private readonly redisService: RedisService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly specialtyService: SpecialtyService,
+    private readonly cityService: CityLibService
   ) {}
 
   public async signUpDoctor(createDoctorDto: CreateDoctorDto): Promise<void> {
-    try {
-      const exists = await this.doctorAuthService.doctorExists(createDoctorDto.email);
+    const exists = await this.doctorAuthService.doctorExists(createDoctorDto.email);
 
-      if(exists) {
-        throw new Error("User already exists");
-      }
-
-      const bytes = await this.doctorAuthService.sendVerificationLink(createDoctorDto);
-      await this.redisService.set(bytes, JSON.stringify(createDoctorDto), 1000 * 60 * 3);
-
-    } catch (error) {
-      console.error(error);
-      return error;
+    if(exists) {
+      throw new Error("User already exists");
     }
+
+    const specialty_id = await this.specialtyService.getIdByName(createDoctorDto.specialty);
+    const city_id = await this.cityService.getIdByName(createDoctorDto.city);
+
+    const doctorEntity: Omit<DoctorEntity, "id"> = {
+      ...createDoctorDto,
+      city: city_id,
+      specialty: specialty_id,
+      rating: this.doctorAuthService.generateRandomRating()
+    };
+
+    const bytes = await this.doctorAuthService.sendVerificationLink(doctorEntity);
+    await this.redisService.set(bytes, JSON.stringify(doctorEntity), 1000 * 60 * 3);
   }
 
   public async verifyDoctor(bytes: string): Promise<void> {
@@ -53,26 +61,8 @@ export class DoctorAuthFacade {
   }
 
   public async signInDoctor(signInDoctor: SignInDoctorDto) {
-
-    try {
-      const id = await this.doctorAuthService.passwordsMatch(signInDoctor.email, signInDoctor.password);
-      const token = await this.jwtService.signInStrategy(id);
-
-      return {
-        data: token,
-        success: true,
-        message: "Signed in successfully"
-      };
-    } catch (error) {
-      console.error(`Failed to sign in ${error}`);
-      return {
-        data: null,
-        success: false,
-        message: "Invalid Credentials"
-      }      
-    }
-
-  
+    const id = await this.doctorAuthService.passwordsMatch(signInDoctor.email, signInDoctor.password);    
+    return this.jwtService.signInStrategy(id);
   }
 }
 

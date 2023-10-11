@@ -11,7 +11,7 @@ import { ClientLibModule } from "@app/client-lib";
 import { MailSenderSource } from "@app/common/lib/tokens";
 import { AwsModule } from "@app/aws";
 import { SesService } from "@app/aws/services/ses.service";
-import { CommonModule, MailSenderProvider } from "@app/common";
+import { CommonModule, MailSenderProvider, PasswordValidationPipe } from "@app/common";
 
 /**
  * Local imports

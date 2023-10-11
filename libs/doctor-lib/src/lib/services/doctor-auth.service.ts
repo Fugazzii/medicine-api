@@ -6,6 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import * as bcrypt from "bcrypt";
 import { CreateDoctorDto } from '../dtos/doctor-create';
 import { DOCTOR_REPOSITORY_TOKEN } from '../repositories';
+import { DoctorEntity } from '../entities';
 
 @Injectable()
 export class DoctorAuthService {
@@ -16,7 +17,7 @@ export class DoctorAuthService {
         private readonly configService: ConfigService
     ) {}
 
-    public async addNewDoctor(newDoctor: CreateDoctorDto): Promise<void> {
+    public async addNewDoctor(newDoctor: DoctorEntity): Promise<void> {
         return this.doctorRepository.save(newDoctor);
     }
 
@@ -27,7 +28,7 @@ export class DoctorAuthService {
         return Boolean(result);
     }
 
-    public async sendVerificationLink(signUpDoctor: CreateDoctorDto): Promise<string> {
+    public async sendVerificationLink(signUpDoctor: Omit<DoctorEntity, "id">): Promise<string> {
         
         const bytes = randomUUID();
         
@@ -54,6 +55,16 @@ export class DoctorAuthService {
         }
 
         return doctor.id;
+    }
+
+    public generateRandomRating() {
+        const randomDecimal = Math.random();
+
+        const min = 1;
+        const max = 5;
+        const randomRating = Math.floor(randomDecimal * (max - min + 1)) + min;
+      
+        return randomRating;
     }
 
 }

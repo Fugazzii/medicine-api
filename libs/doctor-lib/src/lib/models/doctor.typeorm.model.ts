@@ -1,4 +1,4 @@
-import { Column, ManyToOne, Entity as Model, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, ManyToOne, Entity as Model, PrimaryGeneratedColumn } from "typeorm";
 import { DoctorEntity } from "../entities";
 import { SpecialtyTypeormModel } from "@app/specialty";
 import { CityTypeormModel } from "@app/city-lib";

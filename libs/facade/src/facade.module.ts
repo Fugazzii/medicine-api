@@ -5,7 +5,7 @@ import { RedisService } from '@app/redis';
 import { ClientLibModule } from '@app/client-lib';
 import { ClientFormFacade } from './client-form.facade';
 import { ClientFormService, FormsLibModule } from '@app/forms-lib';
-import { SpecialtyModule } from '@app/specialty';
+import { SpecialtyModule, SpecialtyService } from '@app/specialty';
 
 @Module({
   imports: [
@@ -18,7 +18,8 @@ import { SpecialtyModule } from '@app/specialty';
     ClientFormFacade,
     ClientFormService,
     JwtService,
-    RedisService
+    RedisService,
+    SpecialtyService
   ],
   exports: [ClientAuthFacade, ClientFormFacade]
 })

@@ -1,6 +1,7 @@
-import { CreateDoctorDto, SignInDoctorDto } from "@app/doctor-lib";
+import { PasswordValidationPipe } from "@app/common";
+import { CreateDoctorDto, CreateDoctorSchema, SignInDoctorDto } from "@app/doctor-lib";
 import { DoctorAuthFacade } from "@app/facade/doctor-auth.facade";
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, UsePipes } from "@nestjs/common";
 import { ApiConsumes, ApiOperation } from "@nestjs/swagger";
 
 @Controller()
@@ -8,9 +9,10 @@ export class DoctorController {
   public constructor(private readonly facade: DoctorAuthFacade) {}
 
   @Post("/sign-up")
+  @UsePipes(new PasswordValidationPipe(CreateDoctorSchema))
   public async signUp(@Body() signUpDoctor: CreateDoctorDto) {
     try {
-      const result = await this.facade.signInDoctor(signUpDoctor);
+      const result = await this.facade.signUpDoctor(signUpDoctor);
 
       return {
         data: result,
