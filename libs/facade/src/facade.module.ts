@@ -6,12 +6,14 @@ import { ClientLibModule } from '@app/client-lib';
 import { ClientFormFacade } from './client-form.facade';
 import { ClientFormService, FormsLibModule } from '@app/forms-lib';
 import { SpecialtyModule, SpecialtyService } from '@app/specialty';
+import { AwsModule, KmsService } from '@app/aws';
 
 @Module({
   imports: [
     ClientLibModule,
     FormsLibModule,
-    SpecialtyModule
+    SpecialtyModule,
+    AwsModule
   ],
   providers: [
     ClientAuthFacade,
@@ -19,7 +21,8 @@ import { SpecialtyModule, SpecialtyService } from '@app/specialty';
     ClientFormService,
     JwtService,
     RedisService,
-    SpecialtyService
+    SpecialtyService,
+    KmsService
   ],
   exports: [ClientAuthFacade, ClientFormFacade]
 })

@@ -6,3 +6,4 @@ export * from "./lib/models";
 export * from "./lib/repositories";
 export * from "./lib/schemas";
 export * from "./lib/services";
+export * from "./lib/pipes";

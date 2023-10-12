@@ -10,6 +10,7 @@ import { RedisService } from "@app/redis";
 import { SignInClientDto, SignUpClientDto } from "@app/client-lib/lib/dtos";
 import { ClientAuthService } from "@app/client-lib/lib/services";
 import { JwtService } from "@app/common/lib/services";
+import { KmsService } from "@app/aws";
 
 @Injectable()
 export class ClientAuthFacade {
@@ -17,7 +18,8 @@ export class ClientAuthFacade {
   public constructor(
     private readonly clientAuthService: ClientAuthService,
     private readonly redisService: RedisService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly kmsService: KmsService
   ) {}
 
   public async signUpClient(signUpClientDto: SignUpClientDto): Promise<void> {
@@ -40,13 +42,20 @@ export class ClientAuthFacade {
   public async verifyClient(bytes: string): Promise<void> {
     try {
       const signUpOptionsStringed = await this.redisService.get(bytes);
-      const signUpOptions = await JSON.parse(signUpOptionsStringed);
+      const signUpOptions: SignUpClientDto = await JSON.parse(signUpOptionsStringed);
   
       if(!signUpOptions) {
         throw new Error("Not found");
       }
-  
-      await this.clientAuthService.addNewClient(signUpOptions);
+      const obj = { ...signUpOptions };
+
+      for(const key in obj) {
+        if(typeof obj[key] !== "string") continue;
+        const encrypted = await this.kmsService.encrypt(Buffer.from(obj[key]));
+        obj[key] = encrypted.toString("base64");
+      }
+
+      await this.clientAuthService.addNewClient(obj);
       await this.redisService.remove(bytes);    
     } catch (error) {
       console.error(`Failed to verify client: ${error}`);

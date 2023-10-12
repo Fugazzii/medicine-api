@@ -10,15 +10,15 @@ export class ClientTypeormModel implements ClientEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({ type: 'varchar', length: 256, unique: true, nullable: false })
+  @Column({ type: 'varchar', length: 5096, unique: true, nullable: false })
   public private_id: string;
 
-  @Column({ type: 'varchar', length: 256, unique: true, nullable: false })
+  @Column({ type: 'varchar', length: 5096, unique: true, nullable: false })
   public email: string;
 
   @Column({ type: 'integer', nullable: false })
   public age: number;
 
-  @Column({ type: 'varchar', length: 256, nullable: false })
+  @Column({ type: 'varchar', length: 5096, nullable: false })
   public password: string;
 }

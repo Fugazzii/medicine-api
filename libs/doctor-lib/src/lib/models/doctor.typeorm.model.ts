@@ -8,13 +8,13 @@ export class DoctorTypeormModel implements DoctorEntity {
     @PrimaryGeneratedColumn()
     public id: number;
 
-    @Column({ type: "varchar", length: 11 })
+    @Column({ type: "varchar", length: 5096 })
     public private_id: string;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", length: 5096 })
     public email: string;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", length: 5096 })
     public password: string;
 
     @Column({ type: "integer" })

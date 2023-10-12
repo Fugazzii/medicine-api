@@ -13,7 +13,7 @@ import { AuthClientGuard } from "@app/client-lib/lib/guards";
 /**
  * Local imports
  */
-import { SignUpClientValidationPipe } from "../pipes";
+import { SignUpClientValidationPipe } from "../../../../libs/client-lib/src/lib/pipes";
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ClientAuthFacade } from "@app/facade";
 import { PasswordValidationPipe } from "@app/common";
@@ -22,7 +22,9 @@ import { PasswordValidationPipe } from "@app/common";
 @Controller()
 export class ClientAuthController {
   
-  public constructor(private readonly facade: ClientAuthFacade) {}
+  public constructor(
+    private readonly facade: ClientAuthFacade,
+  ) {}
 
   @ApiOperation({ summary: "Sign Up", description: "Endpoint for client registration." })
   @ApiConsumes("application/json")
