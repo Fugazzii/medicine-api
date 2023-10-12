@@ -46,7 +46,8 @@ export class ClientAuthFacade {
         throw new Error("Not found");
       }
   
-      await this.clientAuthService.addNewClient(signUpOptions);        
+      await this.clientAuthService.addNewClient(signUpOptions);
+      await this.clientAuthService.addNewClient(signUpOptions);    
     } catch (error) {
       console.error(`Failed to verify client: ${error}`);
       throw error;
