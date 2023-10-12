@@ -8,65 +8,50 @@ import { ApiConsumes, ApiOperation } from "@nestjs/swagger";
 export class DoctorController {
   public constructor(private readonly facade: DoctorAuthFacade) {}
 
+  /**
+   * SIGN UP NEW DOCTOR
+   */
   @Post("/sign-up")
   @UsePipes(new PasswordValidationPipe(CreateDoctorSchema))
   public async signUp(@Body() signUpDoctor: CreateDoctorDto) {
-    try {
-      const result = await this.facade.signUpDoctor(signUpDoctor);
+    const result = await this.facade.signUpDoctor(signUpDoctor);
 
-      return {
-        data: result,
-        message: "Sent verification link",
-        success: true
-      };
-    } catch (error) {
-      return {
-        error,
-        message: "Failed to add doctor",
-        success: false
-      };      
-    }
+    return {
+      data: result,
+      message: "Sent verification link",
+      success: true
+    };
   }
 
+  /**
+   * VERIFY NEW CLIENT 
+   */
   @ApiOperation({ summary: "Verify email", description: "Endpoint for verifying email." })
   @ApiConsumes("application/json")
   @Get("/verify/:bytes")
   @HttpCode(HttpStatus.CREATED)
   public async verify(@Param("bytes") bytes: string) {
-      try {
-        const result = await this.facade.verifyDoctor(bytes);
+    const result = await this.facade.verifyDoctor(bytes);
 
-        return {
-          data: result,
-          message: "Verified",
-          success: true
-        };
-      } catch (error) {
-        return {
-          error,
-          message: "Verified",
-          success: false
-        };        
-      }
+    return {
+      data: result,
+      message: "Verified",
+      success: true
+    };
   }
 
+  /**
+   * SIGN IN NEW DOCTOR 
+   */
   @Post("/sign-in")
   public async signIn(@Body() signInDoctorDto: SignInDoctorDto) {
-    try {
-      const token = await this.facade.signInDoctor(signInDoctorDto);
+    const token = await this.facade.signInDoctor(signInDoctorDto);
 
-      return {
-        success: true,
-        message: "Signed in doctor",
-        data: token
-      };        
-    } catch (error) {
-      return {
-        error,
-        success: false,
-        message: "Signed in doctor",
-      };              
-    }
+    return {
+      success: true,
+      message: "Signed in doctor",
+      data: token
+    };
   }
 
   @Post("/reset-password")

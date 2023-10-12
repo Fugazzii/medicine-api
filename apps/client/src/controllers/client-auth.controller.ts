@@ -22,10 +22,11 @@ import { PasswordValidationPipe } from "@app/common";
 @Controller()
 export class ClientAuthController {
   
-  public constructor(
-    private readonly facade: ClientAuthFacade,
-  ) {}
+  public constructor(private readonly facade: ClientAuthFacade,) {}
 
+  /**
+   * SIGN UP NEW CLIENT 
+   */
   @ApiOperation({ summary: "Sign Up", description: "Endpoint for client registration." })
   @ApiConsumes("application/json")
   @ApiBody({ type: SignUpClientDto })
@@ -35,7 +36,7 @@ export class ClientAuthController {
   @UsePipes(new SignUpClientValidationPipe(SignUpClientSchema))
   public async signUp(@Body() signUpClientDto: SignUpClientDto) {
 
-    await this.facade.signUpClient(signUpClientDto)
+    await this.facade.signUpClient(signUpClientDto);
 
     return {
       success: true,
@@ -43,6 +44,9 @@ export class ClientAuthController {
     };
   }
 
+  /**
+   * VERIFY CLIENT
+   */
   @ApiOperation({ summary: "Verify email", description: "Endpoint for verifying email." })
   @ApiConsumes("application/json")
   @Get("/verify/:bytes")
@@ -57,7 +61,10 @@ export class ClientAuthController {
     };
   }
 
-  @ApiOperation({ summary: "Sign Up", description: "Endpoint for client registration." })
+  /**
+   * SIGN IN NEW CLIENT
+   */
+  @ApiOperation({ summary: "Sign in", description: "Endpoint for client sign in." })
   @ApiConsumes("application/json")
   @ApiBody({ type: SignInClientDto })
   @Post("/sign-in")

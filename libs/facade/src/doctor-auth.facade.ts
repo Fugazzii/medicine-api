@@ -23,28 +23,36 @@ export class DoctorAuthFacade {
     private readonly cityService: CityLibService
   ) {}
 
-  public async signUpDoctor(createDoctorDto: CreateDoctorDto): Promise<void> {
-    const exists = await this.doctorAuthService.doctorExists(createDoctorDto.email);
+  public async signUpDoctor(createDoctorDto: CreateDoctorDto) {
+    try {
+      const exists = await this.doctorAuthService.doctorExists(createDoctorDto.email);
 
-    if(exists) {
-      throw new Error("User already exists");
+      if(exists) {
+        throw new Error("User already exists");
+      }
+  
+      const specialty_id = await this.specialtyService.getIdByName(createDoctorDto.specialty);
+      const city_id = await this.cityService.getIdByName(createDoctorDto.city);
+  
+      const doctorEntity: Omit<DoctorEntity, "id"> = {
+        ...createDoctorDto,
+        city: city_id,
+        specialty: specialty_id,
+        rating: this.doctorAuthService.generateRandomRating()
+      };
+      
+      const bytes = await this.doctorAuthService.sendVerificationLink(doctorEntity);
+      await this.redisService.set(bytes, JSON.stringify(doctorEntity), 1000 * 60 * 3);        
+    } catch (error) {
+      return {
+        error,
+        message: "Failed to add doctor",
+        success: false
+      };      
     }
-
-    const specialty_id = await this.specialtyService.getIdByName(createDoctorDto.specialty);
-    const city_id = await this.cityService.getIdByName(createDoctorDto.city);
-
-    const doctorEntity: Omit<DoctorEntity, "id"> = {
-      ...createDoctorDto,
-      city: city_id,
-      specialty: specialty_id,
-      rating: this.doctorAuthService.generateRandomRating()
-    };
-    
-    const bytes = await this.doctorAuthService.sendVerificationLink(doctorEntity);
-    await this.redisService.set(bytes, JSON.stringify(doctorEntity), 1000 * 60 * 3);
   }
 
-  public async verifyDoctor(bytes: string): Promise<void> {
+  public async verifyDoctor(bytes: string) {
     try {
       const signUpOptionsStringed = await this.redisService.get(bytes);
       const signUpOptions = await JSON.parse(signUpOptionsStringed);
@@ -56,14 +64,25 @@ export class DoctorAuthFacade {
       await this.doctorAuthService.addNewDoctor(signUpOptions);
       await this.redisService.remove(bytes);  
     } catch (error) {
-      console.error(`Failed to verify doctor: ${error}`);
-      throw error;
+      return {
+        error,
+        message: "Faield to verify doctor",
+        success: false
+      };
     }
   }
 
   public async signInDoctor(signInDoctor: SignInDoctorDto) {
-    const id = await this.doctorAuthService.passwordsMatch(signInDoctor.email, signInDoctor.password);    
-    return this.jwtService.signInStrategy(id);
+    try {
+      const id = await this.doctorAuthService.passwordsMatch(signInDoctor.email, signInDoctor.password);    
+      return this.jwtService.signInStrategy(id);        
+    } catch (error) {
+      return {
+        error,
+        message: "Failed to sign in doctor",
+        success: false
+      };
+    }
   }
 }
 

@@ -12,28 +12,60 @@ export class ClientFormFacade {
     ) {}
 
     public async createForm(createFormDto: CreateFormDto, token: string) {
-        const { id } = await this.jwtService.verifyTokenStrategy(token);
-        const specialist_id = await this.specialtyService.getIdByName(createFormDto.relevant_specialist_name);
-
-        return this.formService.createForm({
-            client: id,
-            description: createFormDto.description,
-            relevant_specialist: specialist_id
-        });
+        try {
+            const { id } = await this.jwtService.verifyTokenStrategy(token);
+            const specialist_id = await this.specialtyService.getIdByName(createFormDto.relevant_specialist_name);
+    
+            return this.formService.createForm({
+                client: id,
+                description: createFormDto.description,
+                relevant_specialist: specialist_id
+            });                
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error when creating form",
+                error
+            };        
+        }
     }
 
     public async getForms(token: string) {
-        // client id
-        const { id } = await this.jwtService.verifyTokenStrategy(token);
-        
-        return this.formService.getForms(id);
+        try {
+            // client id
+            const { id } = await this.jwtService.verifyTokenStrategy(token);
+            
+            return this.formService.getForms(id);            
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error when retrieving forms",
+                error
+            };        
+        }
     }
 
     public getFormById(formId: number) {
-        return this.formService.getFormById(formId);
+        try {
+            return this.formService.getFormById(formId);            
+        } catch (error) {
+            return {
+                error,
+                message: "Failed to retrieve form",
+                success: false
+            };
+        }
     }
 
     public deleteForm(formId: number) {
-        return this.formService.deleteForm(formId);
+        try {
+            return this.formService.deleteForm(formId);            
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error when deleting form",
+                error
+            };        
+        }
     }
 }
