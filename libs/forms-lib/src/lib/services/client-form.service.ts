@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { FORM_REPOSITORY_TOKEN, FormRepositoryInterface } from './lib/repositories';
-import { FormEntity } from './lib/entities';
+import { FORM_REPOSITORY_TOKEN, FormRepositoryInterface } from '../repositories';
+import { FormEntity } from '../entities';
 
 @Injectable()
 export class ClientFormService {

@@ -1,7 +1,7 @@
 /**
  * Nest imports
  */
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 
 /**
  * Lib imports
@@ -28,7 +28,7 @@ export class DoctorAuthFacade {
       const exists = await this.doctorAuthService.doctorExists(createDoctorDto.email);
 
       if(exists) {
-        throw new Error("User already exists");
+        throw new ConflictException("Doctor already exists");
       }
   
       const specialty_id = await this.specialtyService.getIdByName(createDoctorDto.specialty);
@@ -56,9 +56,9 @@ export class DoctorAuthFacade {
     try {
       const signUpOptionsStringed = await this.redisService.get(bytes);
       const signUpOptions = await JSON.parse(signUpOptionsStringed);
-      console.log("signup", signUpOptions);
+
       if(!signUpOptions) {
-        throw new Error("Not found");
+        throw new NotFoundException();
       }
   
       await this.doctorAuthService.addNewDoctor(signUpOptions);
@@ -85,13 +85,3 @@ export class DoctorAuthFacade {
     }
   }
 }
-
-/**
-curl -X POST -H "Content-Type: application/json" -d '{
-  "private_id": "12345678901",
-  "email": "sichinavailia@gmail.com",
-  "password": "ILia#uteslisesi123",
-  "age": 30
-}' http://localhost:3001/api/client/sign-up
-
- */

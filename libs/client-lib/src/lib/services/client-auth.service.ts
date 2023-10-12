@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { CLIENT_REPOSITORY_TOKEN, ClientRepositoryInterface } from "../repositories";
 import { SignUpClientDto } from "../dtos";
 import { randomUUID } from "node:crypto";
@@ -31,11 +31,11 @@ export class ClientAuthService {
         const bytes = randomUUID();
         
         await this.mailSenderService
-        .sendMail(
-          signUpClientDto.email, 
-          `Please verify your email`,
-          `${this.configService.get<string>("HOSTNAME")}/api/client/verify/${bytes}`
-        );
+            .sendMail(
+            signUpClientDto.email, 
+            `Please verify your email`,
+            `${this.configService.get<string>("HOSTNAME")}/api/client/verify/${bytes}`
+            );
 
         return bytes;
     }
@@ -45,13 +45,13 @@ export class ClientAuthService {
         // Check if clients exists
         const client = await this.clientRepository.findOne(email);
         if(!client) {
-            throw new Error("Client is not registered");
+            throw new UnauthorizedException("Client is not registered");
         }
 
         // Compare passwords
         const isMatch = await bcrypt.compare(password, client.password);
         if(!isMatch) {
-            throw new Error("Passwords do not match");
+            throw new BadRequestException("Password does not match");
         }
 
         return client.id;
