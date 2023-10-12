@@ -14,7 +14,7 @@ export class DoctorTypeormRepository implements DoctorRepositoryInterface {
     ) {}
 
     public async create(newDoctor: Omit<DoctorEntity, 'id'>): Promise<void> {
-        await this.repository.save(newDoctor);
+        await this.repository.insert(newDoctor);
     }
 
     public async findOne(id: number): Promise<DoctorEntity | undefined>;

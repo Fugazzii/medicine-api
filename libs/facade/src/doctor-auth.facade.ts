@@ -39,7 +39,7 @@ export class DoctorAuthFacade {
       specialty: specialty_id,
       rating: this.doctorAuthService.generateRandomRating()
     };
-
+    
     const bytes = await this.doctorAuthService.sendVerificationLink(doctorEntity);
     await this.redisService.set(bytes, JSON.stringify(doctorEntity), 1000 * 60 * 3);
   }
@@ -48,12 +48,13 @@ export class DoctorAuthFacade {
     try {
       const signUpOptionsStringed = await this.redisService.get(bytes);
       const signUpOptions = await JSON.parse(signUpOptionsStringed);
-  
+      console.log("signup", signUpOptions);
       if(!signUpOptions) {
         throw new Error("Not found");
       }
   
-      await this.doctorAuthService.addNewDoctor(signUpOptions);        
+      await this.doctorAuthService.addNewDoctor(signUpOptions);
+      await this.redisService.remove(bytes);  
     } catch (error) {
       console.error(`Failed to verify doctor: ${error}`);
       throw error;

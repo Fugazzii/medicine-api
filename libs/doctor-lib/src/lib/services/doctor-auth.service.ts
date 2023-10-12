@@ -5,20 +5,20 @@ import { MAIL_SENDER_TOKEN, MailSenderInterface } from '@app/common';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from "bcrypt";
 import { CreateDoctorDto } from '../dtos/doctor-create';
-import { DOCTOR_REPOSITORY_TOKEN } from '../repositories';
+import { DOCTOR_REPOSITORY_TOKEN, DoctorRepositoryInterface } from '../repositories';
 import { DoctorEntity } from '../entities';
 
 @Injectable()
 export class DoctorAuthService {
 
     public constructor(
-        @Inject(DOCTOR_REPOSITORY_TOKEN) private readonly doctorRepository: ClientRepositoryInterface,
+        @Inject(DOCTOR_REPOSITORY_TOKEN) private readonly doctorRepository: DoctorRepositoryInterface,
         @Inject(MAIL_SENDER_TOKEN) private readonly mailSenderService: MailSenderInterface,
         private readonly configService: ConfigService
     ) {}
 
-    public async addNewDoctor(newDoctor: DoctorEntity): Promise<void> {
-        return this.doctorRepository.save(newDoctor);
+    public async addNewDoctor(newDoctor: Omit<DoctorEntity, "id">): Promise<void> {
+        return this.doctorRepository.create(newDoctor);
     }
 
     public async doctorExists(id: number): Promise<boolean>;
@@ -36,7 +36,7 @@ export class DoctorAuthService {
         .sendMail(
           signUpDoctor.email, 
           `Please verify your email`,
-          `${this.configService.get<string>("HOSTNAME")}/api/client/verify/${bytes}`
+          `${this.configService.get<string>("HOSTNAME")}/api/doctor/verify/${bytes}`
         );
 
         return bytes;
