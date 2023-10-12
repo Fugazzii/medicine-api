@@ -47,7 +47,7 @@ export class ClientAuthFacade {
       }
   
       await this.clientAuthService.addNewClient(signUpOptions);
-      await this.clientAuthService.addNewClient(signUpOptions);    
+      await this.redisService.remove(bytes);    
     } catch (error) {
       console.error(`Failed to verify client: ${error}`);
       throw error;
