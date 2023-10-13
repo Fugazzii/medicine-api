@@ -28,9 +28,9 @@ export class FormTypeormRepository implements FormRepositoryInterface {
         await this.repository.remove(target);
     }
 
-    public async findAll(cliend_id: number): Promise<Array<FormEntity>> {
+    public async findAll(client_id: number): Promise<Array<FormEntity>> {
         return this.repository.find({
-            where: { client: cliend_id }
+            where: { client: client_id }
         });
     }
 }

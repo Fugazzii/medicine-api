@@ -28,4 +28,10 @@ export class FormTypeormModel implements FormEntity {
         (specialty: SpecialtyTypeormModel) => specialty.id
     )
     public relevant_specialist: number;
+
+    @Column({ type: "integer", nullable: false })
+    public price_from: number;
+
+    @Column({ type: "integer", nullable: false })
+    public price_to: number;
 }
