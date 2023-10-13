@@ -19,17 +19,11 @@ export class ClientFormController {
   @ApiConsumes("application/json")
   @ApiBody({ type: CreateFormDto })
   @Post("/form")
-  @HttpCode(HttpStatus.CREATED)
   @UseGuards(AuthClientGuard)
-  public async createForm(@Body() createFormDto: CreateFormDto, @Req() req: Request) {
+  @HttpCode(HttpStatus.CREATED)
+  public createForm(@Body() createFormDto: CreateFormDto, @Req() req: Request) {
     const token = req.headers.authorization?.split(' ')[1];
-    const result = await this.facade.createForm(createFormDto, token);
-
-    return {
-      data: result,
-      message: "Created new form",
-      success: true
-    };
+    return this.facade.createForm(createFormDto, token);
   }
 
   /** 
@@ -38,17 +32,11 @@ export class ClientFormController {
   @ApiOperation({ summary: "Get all forms of a client", description: "Endpoint viewing client forms" })
   @ApiConsumes("application/json")
   @Get("/forms")
-  @HttpCode(HttpStatus.OK)
   @UseGuards(AuthClientGuard)
-  public async getAllForms(@Req() req: Request) {
+  @HttpCode(HttpStatus.OK)
+  public async getForms(@Req() req: Request) {
     const token = req.headers.authorization?.split(' ')[1];
-    const result = await this.facade.getForms(token);
-
-    return {
-      data: result,
-      message: "Retrieved form",
-      success: true
-    };
+    return this.facade.getForms(token);
   }
   /** 
    * GET A FORM BY ID
@@ -59,13 +47,7 @@ export class ClientFormController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthClientGuard)
   public async getForm(@Param("id") id: number) {
-    const result = await this.facade.getFormById(id);
-
-    return {
-      data: result,
-      message: "Retrieved form",
-      success: true
-    };
+    return this.facade.getFormById(id);
   }
 
   /** 
@@ -76,14 +58,8 @@ export class ClientFormController {
   @Delete("/form/:id")
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthClientGuard)
-  public async deleteForm(@Param("id") id: number) {
-    const result = await this.facade.deleteForm(id);
-
-    return {
-      data: result,
-      message: "Deleted form",
-      success: true
-    };
+  public deleteForm(@Param("id") id: number) {
+    return this.facade.deleteForm(id);
   }
 
   @Patch("/form/:id")

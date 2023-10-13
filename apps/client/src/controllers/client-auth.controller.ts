@@ -22,7 +22,7 @@ import { PasswordValidationPipe } from "@app/common";
 @Controller()
 export class ClientAuthController {
   
-  public constructor(private readonly facade: ClientAuthFacade,) {}
+  public constructor(private readonly facade: ClientAuthFacade) {}
 
   /**
    * SIGN UP NEW CLIENT 
@@ -31,17 +31,11 @@ export class ClientAuthController {
   @ApiConsumes("application/json")
   @ApiBody({ type: SignUpClientDto })
   @Post("/sign-up")
-  @HttpCode(HttpStatus.OK)
   @UsePipes(new PasswordValidationPipe(SignUpClientSchema))
   @UsePipes(new SignUpClientValidationPipe(SignUpClientSchema))
-  public async signUp(@Body() signUpClientDto: SignUpClientDto) {
-
-    await this.facade.signUpClient(signUpClientDto);
-
-    return {
-      success: true,
-      message: `Verification link sent to ${signUpClientDto.email}`
-    };
+  @HttpCode(HttpStatus.OK)
+  public signUp(@Body() signUpClientDto: SignUpClientDto) {
+    return this.facade.signUpClient(signUpClientDto);
   }
 
   /**
@@ -51,14 +45,8 @@ export class ClientAuthController {
   @ApiConsumes("application/json")
   @Get("/verify/:bytes")
   @HttpCode(HttpStatus.CREATED)
-  public async verify(@Param("bytes") bytes: string) {
-
-    await this.facade.verifyClient(bytes)
-      
-    return {
-      success: true,
-      message: "Successfully added new user"
-    };
+  public verify(@Param("bytes") bytes: string) {
+    return this.facade.verifyClient(bytes)
   }
 
   /**
@@ -68,15 +56,9 @@ export class ClientAuthController {
   @ApiConsumes("application/json")
   @ApiBody({ type: SignInClientDto })
   @Post("/sign-in")
-  public async signIn(@Body() signInClientDto: SignInClientDto) {
-
-    const token = await this.facade.signInClient(signInClientDto);
-
-    return {
-      success: true,
-      message: "Signed in client",
-      data: token
-    };
+  @HttpCode(HttpStatus.ACCEPTED)
+  public signIn(@Body() signInClientDto: SignInClientDto) {
+    return this.facade.signInClient(signInClientDto);
   }
 
   @Post("/reset-password")

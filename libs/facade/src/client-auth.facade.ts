@@ -32,6 +32,12 @@ export class ClientAuthFacade {
 
       const bytes = await this.clientAuthService.sendVerificationLink(signUpClientDto);
       await this.redisService.set(bytes, JSON.stringify(signUpClientDto), 1000 * 60 * 3);
+    
+      return {
+        data: null,
+        message: "Verification link has been sent",
+        success: true
+      };
     } catch (error) {
       return {
         error,
@@ -59,25 +65,37 @@ export class ClientAuthFacade {
 
       await this.clientAuthService.addNewClient(obj);
       await this.redisService.remove(bytes);    
+    
+      return {
+        data: null,
+        message: "Verified",
+        success: true
+      };
     } catch (error) {
       return {
         error,
         message: "Failed to verify",
         success: false
       }
-    }
+    };
   }
 
   public async signInClient(signInClientDto: SignInClientDto) {
     try {
       const id = await this.clientAuthService.passwordsMatch(signInClientDto.email, signInClientDto.password);
-      return this.jwtService.signInStrategy(id);
+      const token = await this.jwtService.signInStrategy(id);
+    
+      return {
+        data: token,
+        message: "Logged in",
+        success: true
+      };
     } catch (error) {
       return {
         data: null,
-        success: false,
-        message: "Invalid Credentials"
-      }      
+        message: "Invalid Credentials",
+        success: false
+      };
     }  
   }
 }

@@ -16,11 +16,17 @@ export class ClientFormFacade {
             const { id } = await this.jwtService.verifyTokenStrategy(token);
             const specialist_id = await this.specialtyService.getIdByName(createFormDto.relevant_specialist_name);
     
-            return this.formService.createForm({
+            await this.formService.createForm({
                 client: id,
                 description: createFormDto.description,
                 relevant_specialist: specialist_id
-            });                
+            });
+            
+            return {
+                data: null,
+                message: "Created new form",
+                success: true
+            };
         } catch (error) {
             return {
                 success: false,
@@ -35,7 +41,13 @@ export class ClientFormFacade {
             // client id
             const { id } = await this.jwtService.verifyTokenStrategy(token);
             
-            return this.formService.getForms(id);            
+            const result = await this.formService.getForms(id);            
+        
+            return {
+                data: result,
+                message: "Retrieved forms",
+                success: true
+            };
         } catch (error) {
             return {
                 success: false,
@@ -45,9 +57,14 @@ export class ClientFormFacade {
         }
     }
 
-    public getFormById(formId: number) {
+    public async getFormById(formId: number) {
         try {
-            return this.formService.getFormById(formId);            
+            const result = await this.formService.getFormById(formId);            
+            return {
+                data: result,
+                message: "Retrieved form",
+                success: true
+            };          
         } catch (error) {
             return {
                 error,
@@ -57,14 +74,19 @@ export class ClientFormFacade {
         }
     }
 
-    public deleteForm(formId: number) {
+    public async deleteForm(formId: number) {
         try {
-            return this.formService.deleteForm(formId);            
+            await this.formService.deleteForm(formId);            
+            return {
+                data: null,
+                message: "Deleted form",
+                success: true
+            }
         } catch (error) {
             return {
-                success: false,
+                error,
                 message: "Error when deleting form",
-                error
+                success: false
             };        
         }
     }

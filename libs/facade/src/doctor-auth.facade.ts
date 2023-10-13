@@ -43,6 +43,12 @@ export class DoctorAuthFacade {
       
       const bytes = await this.doctorAuthService.sendVerificationLink(doctorEntity);
       await this.redisService.set(bytes, JSON.stringify(doctorEntity), 1000 * 60 * 3);        
+    
+      return {
+        data: null,
+        message: "Verification link has been sent.",
+        success: true
+      }
     } catch (error) {
       return {
         error,
@@ -63,10 +69,16 @@ export class DoctorAuthFacade {
   
       await this.doctorAuthService.addNewDoctor(signUpOptions);
       await this.redisService.remove(bytes);  
+    
+      return {
+        data: null,
+        message: "Verified",
+        success: true
+      };
     } catch (error) {
       return {
         error,
-        message: "Faield to verify doctor",
+        message: "Failed to verify doctor",
         success: false
       };
     }
@@ -75,7 +87,13 @@ export class DoctorAuthFacade {
   public async signInDoctor(signInDoctor: SignInDoctorDto) {
     try {
       const id = await this.doctorAuthService.passwordsMatch(signInDoctor.email, signInDoctor.password);    
-      return this.jwtService.signInStrategy(id);        
+      const token = await this.jwtService.signInStrategy(id);
+      
+      return {
+        success: true,
+        message: "Signed in doctor",
+        data: token
+      };
     } catch (error) {
       return {
         error,

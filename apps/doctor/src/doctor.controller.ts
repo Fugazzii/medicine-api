@@ -11,16 +11,13 @@ export class DoctorController {
   /**
    * SIGN UP NEW DOCTOR
    */
+  @ApiOperation({ summary: "Sign up new doctor", description: "Endpoint for signing up new doctor." })
+  @ApiConsumes("application/json")
   @Post("/sign-up")
   @UsePipes(new PasswordValidationPipe(CreateDoctorSchema))
-  public async signUp(@Body() signUpDoctor: CreateDoctorDto) {
-    const result = await this.facade.signUpDoctor(signUpDoctor);
-
-    return {
-      data: result,
-      message: "Sent verification link",
-      success: true
-    };
+  @HttpCode(HttpStatus.ACCEPTED)
+  public signUp(@Body() signUpDoctor: CreateDoctorDto) {
+    return this.facade.signUpDoctor(signUpDoctor);
   }
 
   /**
@@ -30,28 +27,19 @@ export class DoctorController {
   @ApiConsumes("application/json")
   @Get("/verify/:bytes")
   @HttpCode(HttpStatus.CREATED)
-  public async verify(@Param("bytes") bytes: string) {
-    const result = await this.facade.verifyDoctor(bytes);
-
-    return {
-      data: result,
-      message: "Verified",
-      success: true
-    };
+  public verify(@Param("bytes") bytes: string) {
+    return this.facade.verifyDoctor(bytes);
   }
 
   /**
    * SIGN IN NEW DOCTOR 
    */
+  @ApiOperation({ summary: "Sign in", description: "Endpoint for logging in." })
+  @ApiConsumes("application/json")
   @Post("/sign-in")
-  public async signIn(@Body() signInDoctorDto: SignInDoctorDto) {
-    const token = await this.facade.signInDoctor(signInDoctorDto);
-
-    return {
-      success: true,
-      message: "Signed in doctor",
-      data: token
-    };
+  @HttpCode(HttpStatus.OK)
+  public signIn(@Body() signInDoctorDto: SignInDoctorDto) {
+    return this.facade.signInDoctor(signInDoctorDto);
   }
 
   @Post("/reset-password")
