@@ -4,5 +4,5 @@ export const DOCTOR_VERTICE_DYNAMO_DB_REPOSITORY_TOKEN = Symbol("DOCTOR_VERTICE_
 
 export interface DoctorVerticeRepositoryInterface {
     insert(doctorVerticeEntity: DoctorVerticeEntity): Promise<void>;
-    findOne(id: number): Promise<DoctorVerticeEntity>;
+    findOne(doctor_id: number): Promise<DoctorVerticeEntity>;
 }
