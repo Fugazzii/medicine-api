@@ -1,2 +1,2 @@
-export * from './doctor-vertices.module';
-export * from './doctor-vertices.service';
+export * from "./doctor-vertices.module";
+export * from "./lib/services";

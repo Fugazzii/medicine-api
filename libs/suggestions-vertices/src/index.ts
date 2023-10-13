@@ -1,2 +1,2 @@
-export * from './suggestions-vertices.module';
-export * from './suggestions-vertices.service';
+export * from "./suggestions-vertices.module";
+export * from "./lib/services/suggestions-vertices.service";
