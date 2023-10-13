@@ -1,12 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { FORM_REPOSITORY_TOKEN, FormRepositoryInterface } from '../repositories';
-import { FormEntity } from '../entities';
+import { Inject, Injectable } from "@nestjs/common";
+import {
+    FORM_REPOSITORY_TOKEN,
+    FormRepositoryInterface
+} from "../repositories";
+import { FormEntity } from "../entities";
 
 @Injectable()
 export class ClientFormService {
-
     public constructor(
-        @Inject(FORM_REPOSITORY_TOKEN) private readonly formRepository: FormRepositoryInterface
+        @Inject(FORM_REPOSITORY_TOKEN)
+        private readonly formRepository: FormRepositoryInterface
     ) {}
 
     public async createForm(createFormEntity: Omit<FormEntity, "id">) {
@@ -18,11 +21,10 @@ export class ClientFormService {
     }
 
     public getFormById(id: number) {
-        return this.formRepository.findOne(id); 
+        return this.formRepository.findOne(id);
     }
 
     public getForms(client_id: number) {
         return this.formRepository.findAll(client_id);
     }
-
 }

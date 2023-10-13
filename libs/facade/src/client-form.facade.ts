@@ -14,14 +14,16 @@ export class ClientFormFacade {
     public async createForm(createFormDto: CreateFormDto, token: string) {
         try {
             const { id } = await this.jwtService.verifyTokenStrategy(token);
-            const specialist_id = await this.specialtyService.getIdByName(createFormDto.relevant_specialist_name);
-    
+            const specialist_id = await this.specialtyService.getIdByName(
+                createFormDto.relevant_specialist_name
+            );
+
             await this.formService.createForm({
                 client: id,
                 description: createFormDto.description,
                 relevant_specialist: specialist_id
             });
-            
+
             return {
                 data: null,
                 message: "Created new form",
@@ -32,7 +34,7 @@ export class ClientFormFacade {
                 success: false,
                 message: "Error when creating form",
                 error
-            };        
+            };
         }
     }
 
@@ -40,9 +42,9 @@ export class ClientFormFacade {
         try {
             // client id
             const { id } = await this.jwtService.verifyTokenStrategy(token);
-            
-            const result = await this.formService.getForms(id);            
-        
+
+            const result = await this.formService.getForms(id);
+
             return {
                 data: result,
                 message: "Retrieved forms",
@@ -53,18 +55,18 @@ export class ClientFormFacade {
                 success: false,
                 message: "Error when retrieving forms",
                 error
-            };        
+            };
         }
     }
 
     public async getFormById(formId: number) {
         try {
-            const result = await this.formService.getFormById(formId);            
+            const result = await this.formService.getFormById(formId);
             return {
                 data: result,
                 message: "Retrieved form",
                 success: true
-            };          
+            };
         } catch (error) {
             return {
                 error,
@@ -76,18 +78,18 @@ export class ClientFormFacade {
 
     public async deleteForm(formId: number) {
         try {
-            await this.formService.deleteForm(formId);            
+            await this.formService.deleteForm(formId);
             return {
                 data: null,
                 message: "Deleted form",
                 success: true
-            }
+            };
         } catch (error) {
             return {
                 error,
                 message: "Error when deleting form",
                 success: false
-            };        
+            };
         }
     }
 }

@@ -5,9 +5,9 @@ import { Repository } from "typeorm";
 import { CityEntity } from "../../entities";
 
 export class CityTypeormRepository implements CityRepositoryInterface {
-    
     public constructor(
-        @InjectRepository(CityTypeormModel) private readonly repository: Repository<CityTypeormModel>
+        @InjectRepository(CityTypeormModel)
+        private readonly repository: Repository<CityTypeormModel>
     ) {}
 
     public find(id: number): Promise<CityEntity>;
@@ -16,8 +16,7 @@ export class CityTypeormRepository implements CityRepositoryInterface {
         const isName = typeof arg === "string";
 
         return isName
-            ? this.repository.findOneBy({ name: arg }) 
-            : this.repository.findOne({ where: { id: arg } })
+            ? this.repository.findOneBy({ name: arg })
+            : this.repository.findOne({ where: { id: arg } });
     }
-
 }

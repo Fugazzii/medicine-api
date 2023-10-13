@@ -7,9 +7,9 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class CountryTypeormRepository implements CountryRepositoryInterface {
-    
     public constructor(
-        @InjectRepository(CountryTypeormModel) private readonly repository: Repository<CountryTypeormModel>
+        @InjectRepository(CountryTypeormModel)
+        private readonly repository: Repository<CountryTypeormModel>
     ) {}
 
     public async find(id: number): Promise<CountryEntity>;
@@ -18,7 +18,7 @@ export class CountryTypeormRepository implements CountryRepositoryInterface {
         const isName = typeof arg === "string";
 
         return isName
-            ? this.repository.findOne({ where: { name: arg } }) 
+            ? this.repository.findOne({ where: { name: arg } })
             : this.repository.findOne({ where: { id: arg } });
     }
 }

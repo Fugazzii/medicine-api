@@ -1,2 +1,2 @@
 export * from "./city.repository.interface";
-export * from "./implementations/city.typeorm.repository"
+export * from "./implementations/city.typeorm.repository";

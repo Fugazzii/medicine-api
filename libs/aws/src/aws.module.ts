@@ -5,7 +5,7 @@ import { KmsService } from "./services/kms.service";
 import { KMS } from "@aws-sdk/client-kms";
 
 @Module({
-  providers: [SesService, KmsService, ConfigService, KMS],
-  exports: [SesService, KmsService, KMS]
+    providers: [SesService, KmsService, ConfigService, KMS],
+    exports: [SesService, KmsService, KMS]
 })
 export class AwsModule {}

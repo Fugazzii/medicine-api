@@ -1,4 +1,4 @@
-export * from './doctor-lib.module';
+export * from "./doctor-lib.module";
 export * from "./lib/dtos";
 export * from "./lib/entities";
 export * from "./lib/models";

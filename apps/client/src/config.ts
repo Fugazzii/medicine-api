@@ -8,4 +8,4 @@ export const databaseConfig: config = {
     host: process.env.POSTGRES_HOST,
     port: +process.env.POSTGRES_PORT,
     synchronize: true
-}
+};

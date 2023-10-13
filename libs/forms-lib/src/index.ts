@@ -1,4 +1,4 @@
-export * from './forms-lib.module';
+export * from "./forms-lib.module";
 export * from "./lib/dtos";
 export * from "./lib/entities";
 export * from "./lib/models";

@@ -7,9 +7,9 @@ import { Repository } from "typeorm";
 
 @Injectable()
 export class FormTypeormRepository implements FormRepositoryInterface {
-
     public constructor(
-        @InjectRepository(FormTypeormModel) private readonly repository: Repository<FormTypeormModel>
+        @InjectRepository(FormTypeormModel)
+        private readonly repository: Repository<FormTypeormModel>
     ) {}
 
     public async create(newForm: Omit<FormEntity, "id">): Promise<void> {
@@ -23,7 +23,7 @@ export class FormTypeormRepository implements FormRepositoryInterface {
     public async deleteOne(id: number): Promise<void> {
         const target = await this.findOne(id);
 
-        if(!target) return;
+        if (!target) return;
 
         await this.repository.remove(target);
     }
@@ -33,5 +33,4 @@ export class FormTypeormRepository implements FormRepositoryInterface {
             where: { client: cliend_id }
         });
     }
-
 }

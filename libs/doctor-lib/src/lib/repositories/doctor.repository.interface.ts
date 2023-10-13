@@ -10,7 +10,7 @@ export interface DoctorRepositoryInterface {
     findOne(id: number): Promise<DoctorEntity>;
     findOne(email: string): Promise<DoctorEntity>;
     findOne(arg: number | string): Promise<DoctorEntity>;
-    
+
     deleteOne(deleteDoctorDto: DeleteDoctorDto): Promise<void>;
     update(id: number, doctorUpdateDto: DoctorUpdateDto): Promise<DoctorEntity>;
 }

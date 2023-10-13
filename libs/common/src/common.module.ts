@@ -5,11 +5,11 @@ import { ConfigModule } from "@nestjs/config";
 import { PasswordValidationPipe } from "./lib/pipes";
 
 @Module({
-  imports: [
-    JwtModule.register({ global: true }),
-    ConfigModule.forRoot({ envFilePath: "/var/usr/app/.env" })
-  ],
-  providers: [JwtService],
-  exports: [JwtService]
+    imports: [
+        JwtModule.register({ global: true }),
+        ConfigModule.forRoot({ envFilePath: "/var/usr/app/.env" })
+    ],
+    providers: [JwtService],
+    exports: [JwtService]
 })
 export class CommonModule {}

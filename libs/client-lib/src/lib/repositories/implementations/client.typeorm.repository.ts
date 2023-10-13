@@ -14,9 +14,9 @@ import { ClientRepositoryInterface } from "../client.repository.interface";
 
 @Injectable()
 export class ClientTypeormRepository implements ClientRepositoryInterface {
-    
     public constructor(
-        @InjectRepository(ClientTypeormModel) private readonly repository: Repository<ClientTypeormModel>
+        @InjectRepository(ClientTypeormModel)
+        private readonly repository: Repository<ClientTypeormModel>
     ) {}
 
     public async save(newClient: Omit<ClientEntity, "id">): Promise<void> {
@@ -29,16 +29,15 @@ export class ClientTypeormRepository implements ClientRepositoryInterface {
         const isEmail = typeof arg === "string";
 
         return isEmail
-            ? this.repository.findOneBy({ email: arg }) 
-            : this.repository.findOne({ where: { id: arg } }) 
+            ? this.repository.findOneBy({ email: arg })
+            : this.repository.findOne({ where: { id: arg } });
     }
 
     public async deleteOne(id: number): Promise<void> {
         const target = await this.findOne(id);
 
-        if(!target) return;
+        if (!target) return;
 
         this.repository.delete(target);
     }
-    
 }

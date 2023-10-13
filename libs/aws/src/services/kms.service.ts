@@ -4,7 +4,6 @@ import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class KmsService {
-    
     public constructor(
         private readonly kms: KMS,
         private readonly configService: ConfigService
@@ -21,10 +20,9 @@ export class KmsService {
 
     public async decrypt(data: Buffer): Promise<Buffer> {
         const response = await this.kms.decrypt({
-            CiphertextBlob: data,
+            CiphertextBlob: data
         });
 
         return Buffer.from(response.Plaintext);
     }
-
 }

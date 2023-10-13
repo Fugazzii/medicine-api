@@ -1,4 +1,9 @@
-import { Column, ManyToOne, Entity as Model, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    ManyToOne,
+    Entity as Model,
+    PrimaryGeneratedColumn
+} from "typeorm";
 import { DoctorEntity } from "../entities";
 import { SpecialtyTypeormModel } from "@app/specialty";
 import { CityTypeormModel } from "@app/city-lib";
@@ -24,15 +29,18 @@ export class DoctorTypeormModel implements DoctorEntity {
     public gender: boolean;
 
     @Column({ type: "integer" })
-    public experience_in_years:  number;
+    public experience_in_years: number;
 
     @Column({ type: "integer" })
     public price_in_dollars: number;
-    
+
     @Column({ type: "integer" })
     public rating: number;
 
-    @ManyToOne(() => SpecialtyTypeormModel, (specialty: SpecialtyTypeormModel) => specialty.id)
+    @ManyToOne(
+        () => SpecialtyTypeormModel,
+        (specialty: SpecialtyTypeormModel) => specialty.id
+    )
     public specialty: number;
 
     @ManyToOne(() => CityTypeormModel, (city: CityTypeormModel) => city.id)

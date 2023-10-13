@@ -6,10 +6,12 @@ import { SpecialtyEntity } from "../../entities";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
-export class SpecialtyTypeormRepository implements SpecialtyRepositoryInterface {
-    
+export class SpecialtyTypeormRepository
+    implements SpecialtyRepositoryInterface
+{
     public constructor(
-        @InjectRepository(SpecialtyTypeormModel) private readonly repository: Repository<SpecialtyTypeormModel>
+        @InjectRepository(SpecialtyTypeormModel)
+        private readonly repository: Repository<SpecialtyTypeormModel>
     ) {}
 
     public find(id: number): Promise<SpecialtyEntity>;
@@ -18,8 +20,7 @@ export class SpecialtyTypeormRepository implements SpecialtyRepositoryInterface 
         const isName = typeof arg === "string";
 
         return isName
-            ? this.repository.findOneBy({ name: arg }) 
-            : this.repository.findOne({ where: { id: arg } })
+            ? this.repository.findOneBy({ name: arg })
+            : this.repository.findOne({ where: { id: arg } });
     }
-
 }

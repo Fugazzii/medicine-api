@@ -1,12 +1,20 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { CITY_REPOSITORY_TOKEN, CityRepositoryInterface } from './lib/repositories';
-import { COUNTRY_REPOSITORY_TOKEN, CountryRepositoryInterface } from '@app/country-lib';
+import { Inject, Injectable } from "@nestjs/common";
+import {
+    CITY_REPOSITORY_TOKEN,
+    CityRepositoryInterface
+} from "./lib/repositories";
+import {
+    COUNTRY_REPOSITORY_TOKEN,
+    CountryRepositoryInterface
+} from "@app/country-lib";
 
 @Injectable()
 export class CityLibService {
     public constructor(
-        @Inject(CITY_REPOSITORY_TOKEN) private readonly cityRepository: CityRepositoryInterface,
-        @Inject(COUNTRY_REPOSITORY_TOKEN) private readonly countryRepository: CountryRepositoryInterface
+        @Inject(CITY_REPOSITORY_TOKEN)
+        private readonly cityRepository: CityRepositoryInterface,
+        @Inject(COUNTRY_REPOSITORY_TOKEN)
+        private readonly countryRepository: CountryRepositoryInterface
     ) {}
 
     public async getIdByName(cityName: string) {
@@ -18,5 +26,4 @@ export class CityLibService {
         const { country } = await this.cityRepository.find(cityName);
         return country;
     }
-
 }
