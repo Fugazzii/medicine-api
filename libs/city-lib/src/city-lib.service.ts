@@ -26,4 +26,10 @@ export class CityLibService {
         const { country } = await this.cityRepository.find(cityName);
         return country;
     }
+
+    public async getCoordinatesByCity(cityId: number) {
+        const { longitude, latitude } = await this.cityRepository.find(cityId);
+
+        return { longitude, latitude };
+    }
 }

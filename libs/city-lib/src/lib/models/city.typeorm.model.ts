@@ -22,7 +22,7 @@ export class CityTypeormModel implements CityEntity {
     public name: string;
 
     @Column({ type: "float" })
-    public longtitude: number;
+    public longitude: number;
 
     @Column({ type: "float" })
     public latitude: number;
