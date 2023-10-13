@@ -26,10 +26,12 @@ export class DoctorAuthService {
         private readonly configService: ConfigService
     ) {}
 
-    public async addNewDoctor(
-        newDoctor: Omit<DoctorEntity, "id">
-    ): Promise<void> {
+    public async addNewDoctor(newDoctor: Omit<DoctorEntity, "id">): Promise<void> {
         return this.doctorRepository.create(newDoctor);
+    }
+
+    public async findDoctorById(email: string) {
+        return this.doctorRepository.findOne(email);
     }
 
     public async doctorExists(id: number): Promise<boolean>;

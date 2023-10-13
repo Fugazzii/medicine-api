@@ -21,7 +21,9 @@ export class ClientFormFacade {
             await this.formService.createForm({
                 client: id,
                 description: createFormDto.description,
-                relevant_specialist: specialist_id
+                relevant_specialist: specialist_id,
+                price_from: createFormDto.price_from,
+                price_to: createFormDto.price_to,                
             });
 
             return {

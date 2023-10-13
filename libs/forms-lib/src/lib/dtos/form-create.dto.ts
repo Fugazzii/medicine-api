@@ -9,4 +9,10 @@ export class CreateFormDto {
 
     @ApiProperty({ example: "Cardiologist" })
     public relevant_specialist_name: string;
+
+    @ApiProperty({ example: 1000 })
+    public price_from: number;
+
+    @ApiProperty({ example: 2000 })
+    public price_to: number;
 }

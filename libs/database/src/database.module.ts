@@ -11,10 +11,7 @@ import { config } from "./database.config";
 
 @Module({})
 export class DatabaseModule {
-    public static forRoot(
-        configuration: config,
-        entities: any[]
-    ): DynamicModule {
+    public static forRoot(configuration: config, entities: any[]): DynamicModule {
         return {
             module: DatabaseModule,
             imports: [

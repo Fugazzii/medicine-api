@@ -40,6 +40,8 @@ services:
       dockerfile: ./apps/knn/Dockerfile
     env_file:
       - ./apps/knn/.env
+    depends_on:
+      - postgres_clients
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules

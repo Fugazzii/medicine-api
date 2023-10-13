@@ -21,6 +21,7 @@ import {
 import { DoctorAuthFacade } from "@app/facade/doctor-auth.facade";
 import { FacadeModule } from "@app/facade";
 import { RedisService } from "@app/redis";
+import { SnsService } from "@app/aws";
 
 @Module({
     imports: [
@@ -29,7 +30,7 @@ import { RedisService } from "@app/redis";
             DoctorTypeormModel,
             SpecialtyTypeormModel,
             CityTypeormModel,
-            CountryTypeormModel
+            CountryTypeormModel,
         ]),
         DoctorLibModule,
         CommonModule,
@@ -44,7 +45,8 @@ import { RedisService } from "@app/redis";
         RedisService,
         CityLibService,
         SpecialtyService,
-        CountryLibService
+        CountryLibService,
+        SnsService
     ]
 })
 export class DoctorModule {}
