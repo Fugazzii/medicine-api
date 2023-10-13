@@ -83,6 +83,18 @@
       ],
       "@app/database/*": [
         "libs/database/src/*"
+      ],
+      "@app/doctor-vertices": [
+        "libs/doctor-vertices/src"
+      ],
+      "@app/doctor-vertices/*": [
+        "libs/doctor-vertices/src/*"
+      ],
+      "@app/suggestions-vertices": [
+        "libs/suggestions-vertices/src"
+      ],
+      "@app/suggestions-vertices/*": [
+        "libs/suggestions-vertices/src/*"
       ]
     }
   }

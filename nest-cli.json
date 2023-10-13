@@ -135,6 +135,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/knn/tsconfig.app.json"
       }
+    },
+    "doctor-vertices": {
+      "type": "library",
+      "root": "libs/doctor-vertices",
+      "entryFile": "index",
+      "sourceRoot": "libs/doctor-vertices/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/doctor-vertices/tsconfig.lib.json"
+      }
+    },
+    "suggestions-vertices": {
+      "type": "library",
+      "root": "libs/suggestions-vertices",
+      "entryFile": "index",
+      "sourceRoot": "libs/suggestions-vertices/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/suggestions-vertices/tsconfig.lib.json"
+      }
     }
   }
 }

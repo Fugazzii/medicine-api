@@ -102,7 +102,9 @@
       "^@app/specialty-lib(|/.*)$": "<rootDir>/libs/specialty-lib/src/$1",
       "^@app/specialty(|/.*)$": "<rootDir>/libs/specialty/src/$1",
       "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1",
-      "^@app/knn-lib(|/.*)$": "<rootDir>/libs/knn-lib/src/$1"
+      "^@app/knn-lib(|/.*)$": "<rootDir>/libs/knn-lib/src/$1",
+      "^@app/doctor-vertices(|/.*)$": "<rootDir>/libs/doctor-vertices/src/$1",
+      "^@app/suggestions-vertices(|/.*)$": "<rootDir>/libs/suggestions-vertices/src/$1"
     }
   }
 }
