@@ -3,17 +3,19 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class SnsService {
-
     private readonly snsClient: SNSClient;
 
     public constructor() {
         this.snsClient = new SNSClient();
     }
 
-    public async publishMessage(message: string, topicArn: string): Promise<void> {
+    public async publishMessage(
+        message: string,
+        topicArn: string
+    ): Promise<void> {
         const publishCommand = new PublishCommand({
             TopicArn: topicArn,
-            Message: message,
+            Message: message
         });
 
         await this.snsClient.send(publishCommand);

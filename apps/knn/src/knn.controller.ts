@@ -1,12 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
-import { KnnService } from './knn.service';
+import { Controller } from "@nestjs/common";
 
 @Controller()
 export class KnnController {
-  constructor(private readonly knnService: KnnService) {}
+    public constructor() {}
 
-  @Get()
-  getHello(): string {
-    return this.knnService.getHello();
-  }
+    public calculate() {}
 }

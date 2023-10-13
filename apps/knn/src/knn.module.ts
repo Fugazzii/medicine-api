@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
-import { KnnController } from './knn.controller';
-import { KnnService } from './knn.service';
+import { Module } from "@nestjs/common";
+import { KnnController } from "./knn.controller";
+import { AwsModule } from "@app/aws";
+import { CommonModule } from "@app/common";
 
 @Module({
-  imports: [],
-  controllers: [KnnController],
-  providers: [KnnService],
+    imports: [AwsModule, CommonModule],
+    controllers: [KnnController],
+    providers: []
 })
 export class KnnModule {}
