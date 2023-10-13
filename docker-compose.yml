@@ -33,6 +33,19 @@ services:
     ports:
       - 3000:3000
   
+  # Knn microservice
+  knn:
+    build:
+      context: ./
+      dockerfile: ./apps/knn/Dockerfile
+    env_file:
+      - ./apps/knn/.env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3002:3002
+
   # Postgres clients
   postgres_clients:
     image: postgres

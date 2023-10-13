@@ -36,6 +36,7 @@ import { SpecialtyTypeormModel } from "@app/specialty";
 import { CityTypeormModel } from "@app/city-lib";
 import { CountryTypeormModel } from "@app/country-lib";
 import { databaseConfig } from "./config";
+import { SnsService } from "@app/aws/services/sns.service";
 
 @Module({
     imports: [

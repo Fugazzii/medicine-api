@@ -126,6 +126,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/database/tsconfig.lib.json"
       }
+    },
+    "knn": {
+      "type": "application",
+      "root": "apps/knn",
+      "entryFile": "main",
+      "sourceRoot": "apps/knn/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/knn/tsconfig.app.json"
+      }
     }
   }
 }
