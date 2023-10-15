@@ -7,9 +7,17 @@ import { ClientFormFacade } from "./client-form.facade";
 import { ClientFormService, FormsLibModule } from "@app/forms-lib";
 import { SpecialtyModule, SpecialtyService } from "@app/specialty";
 import { AwsModule, KmsService } from "@app/aws";
+import { NatsModule, NatsService } from "@app/nats";
+import { ClientsModule } from "@nestjs/microservices";
 
 @Module({
-    imports: [ClientLibModule, FormsLibModule, SpecialtyModule, AwsModule],
+    imports: [
+        ClientLibModule,
+        FormsLibModule,
+        SpecialtyModule,
+        AwsModule,
+        NatsModule
+    ],
     providers: [
         ClientAuthFacade,
         ClientFormFacade,
@@ -17,7 +25,8 @@ import { AwsModule, KmsService } from "@app/aws";
         JwtService,
         RedisService,
         SpecialtyService,
-        KmsService
+        KmsService,
+        NatsService
     ],
     exports: [ClientAuthFacade, ClientFormFacade]
 })

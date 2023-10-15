@@ -1,6 +1,7 @@
 import { PublishCommand, SNSClient } from "@aws-sdk/client-sns";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { randomUUID } from "node:crypto";
 
 @Injectable()
 export class SnsService {
@@ -19,9 +20,10 @@ export class SnsService {
         const publishCommand = new PublishCommand({
             TopicArn: topicArn,
             Message: message,
-            MessageGroupId: messageGroupdId
+            MessageGroupId: messageGroupdId,
+            MessageDeduplicationId: randomUUID()
         });
-
-        await this.snsClient.send(publishCommand);  
+        const r = await this.snsClient.send(publishCommand);
+        console.log("Published", r);
     }
 }

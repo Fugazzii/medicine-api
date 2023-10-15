@@ -12,8 +12,9 @@ export class KnnController {
         private readonly cityService: CityLibService
     ) {}
 
-    @MessagePattern("arn:aws:sns:us-east-1:083344429626:medicine_api-new_doctor_vertice.fifo")
+    @MessagePattern("doctors")
     public async addNewDoctorVertice(@Payload() doctor: DoctorEntity, @Ctx() context: any) {
+        console.log("KNNNNNNNNNNNNNNNNNNNNNNNn")
         const coordinates = await this.cityService.getCoordinatesByCity(doctor.city);
 
         const { longitude, latitude } = this._normalizeCoordinates(coordinates);

@@ -9,6 +9,7 @@ services:
     env_file:
       - ./apps/client/.env
     depends_on:
+      - nats
       - postgres_clients
       - redis
     volumes:
@@ -25,6 +26,7 @@ services:
     env_file:
       - ./apps/doctor/.env
     depends_on:
+      - nats
       - postgres_clients
       - redis
     volumes:
@@ -41,6 +43,7 @@ services:
     env_file:
       - ./apps/knn/.env
     depends_on:
+      - nats
       - postgres_clients
     volumes:
       - .:/usr/src/app
@@ -63,6 +66,13 @@ services:
       - 6379:6379
     volumes:
       - redis:/data
+  
+  # NATS service
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"  # NATS server
+      - "8222:8222"  # NATS HTTP monitoring
 
 volumes:
   postgres_clients:

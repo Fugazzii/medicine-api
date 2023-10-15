@@ -95,6 +95,12 @@
       ],
       "@app/suggestions-vertices/*": [
         "libs/suggestions-vertices/src/*"
+      ],
+      "@app/nats": [
+        "libs/nats/src"
+      ],
+      "@app/nats/*": [
+        "libs/nats/src/*"
       ]
     }
   }

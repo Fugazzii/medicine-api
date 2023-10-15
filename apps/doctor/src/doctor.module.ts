@@ -4,10 +4,9 @@ import { ConfigModule } from "@nestjs/config";
 import { DatabaseModule } from "@app/database";
 import { databaseConfig } from "./config";
 import { DoctorLibModule } from "@app/doctor-lib";
-import { CommonModule, PasswordValidationPipe } from "@app/common";
+import { CommonModule } from "@app/common";
 import { DoctorTypeormModel } from "@app/doctor-lib/lib/models";
 import {
-    SPECIALTY_REPOSITORY_TOKEN,
     SpecialtyModule,
     SpecialtyService,
     SpecialtyTypeormModel
@@ -21,7 +20,7 @@ import {
 import { DoctorAuthFacade } from "@app/facade/doctor-auth.facade";
 import { FacadeModule } from "@app/facade";
 import { RedisService } from "@app/redis";
-import { SnsService } from "@app/aws";
+import { NatsModule } from "@app/nats";
 
 @Module({
     imports: [
@@ -37,7 +36,8 @@ import { SnsService } from "@app/aws";
         FacadeModule,
         SpecialtyModule,
         CityLibModule,
-        CountryLibModule
+        CountryLibModule,
+        NatsModule
     ],
     controllers: [DoctorController],
     providers: [
@@ -46,7 +46,6 @@ import { SnsService } from "@app/aws";
         CityLibService,
         SpecialtyService,
         CountryLibService,
-        SnsService
     ]
 })
 export class DoctorModule {}

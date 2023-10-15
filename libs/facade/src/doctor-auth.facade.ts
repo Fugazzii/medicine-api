@@ -3,6 +3,7 @@
  */
 import {
     ConflictException,
+    Inject,
     Injectable,
     NotFoundException
 } from "@nestjs/common";
@@ -20,8 +21,9 @@ import {
 } from "@app/doctor-lib";
 import { SpecialtyService } from "@app/specialty";
 import { CityLibService } from "@app/city-lib";
-import { SnsService } from "@app/aws";
 import { ConfigService } from "@nestjs/config";
+import { NatsService } from "@app/nats";
+import { ClientNats, ClientProxy } from "@nestjs/microservices";
 
 @Injectable()
 export class DoctorAuthFacade {
@@ -31,8 +33,8 @@ export class DoctorAuthFacade {
         private readonly jwtService: JwtService,
         private readonly specialtyService: SpecialtyService,
         private readonly cityService: CityLibService,
-        private readonly broker: SnsService,
-        private readonly configService: ConfigService
+        private readonly configService: ConfigService,
+        private readonly broker: NatsService
     ) {}
 
     public async signUpDoctor(createDoctorDto: CreateDoctorDto) {
@@ -84,12 +86,8 @@ export class DoctorAuthFacade {
 
             const doctorEntity: DoctorEntity = await this.doctorAuthService.findDoctorById(signUpOptions.email);
             const stringed = JSON.stringify(doctorEntity);
-            try {
-                const arn = this.configService.get<string>("AWS_MEDICINE_ARN_NEW_DOCTOR");
-                await this.broker.publish(stringed, arn, "1");                    
-            } catch (error) {
-                console.error(error);
-            }
+
+            // this.broker.send("doctors", stringed);
 
             return {
                 data: null,

@@ -16,6 +16,7 @@
 import { NestFactory } from "@nestjs/core";
 import { DoctorModule } from "./doctor.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 
 async function bootstrap() {
     const app = await NestFactory.create(DoctorModule);
@@ -31,6 +32,16 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup("swagger", app, document);
 
+    app.connectMicroservice<MicroserviceOptions>({
+        transport: Transport.NATS,
+        options: {
+            name: "NATSS",
+            servers: ["nats://nats:4222"]
+        }
+    })
+
+    await app.startAllMicroservices();
     await app.listen(3000);
+
 }
 bootstrap();
