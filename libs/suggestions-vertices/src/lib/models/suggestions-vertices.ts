@@ -1,7 +1,8 @@
 import { DoctorVerticeEntity } from "@app/doctor-vertices";
-import { SuggesstionVerticeEntity } from "../entites";
+import { DoctorVertex } from "@app/common";
+import { SuggestionVerticeEntity } from "../entites";
 
-export class SuggestionVerticeModel implements SuggesstionVerticeEntity {
+export class SuggestionVerticeModel implements SuggestionVerticeEntity {
     public form_id: number;
-    public suggestion_vertices: DoctorVerticeEntity[];
+    public suggestion_vertices: Array<DoctorVertex>;
 }

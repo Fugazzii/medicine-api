@@ -5,7 +5,10 @@ import {
     GetItemCommandOutput,
     PutItemCommandOutput,
     PutItemCommandInput,
-    GetItemCommandInput
+    GetItemCommandInput,
+    ScanCommandInput,
+    ScanCommandOutput,
+    ScanCommand
 } from "@aws-sdk/client-dynamodb";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
@@ -33,4 +36,10 @@ export class DynamoDBService {
         const command = new GetItemCommand(params);
         return this.client.send(command);
     }
+
+    public scan(param: ScanCommandInput): Promise<ScanCommandOutput> {
+        const command = new ScanCommand(param);
+        return this.client.send(command);
+    }
+    
 }

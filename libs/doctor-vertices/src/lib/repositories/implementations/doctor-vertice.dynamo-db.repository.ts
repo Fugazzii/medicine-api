@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { DoctorVerticeRepositoryInterface } from "../doctor-vertice.repository.interface";
 import { DynamoDBService } from "@app/aws";
-import { GetItemCommandInput, GetItemCommandOutput, PutItemCommandInput, PutItemCommandOutput } from "@aws-sdk/client-dynamodb";
+import { GetItemCommandInput, GetItemCommandOutput, PutItemCommandInput, PutItemCommandOutput, ScanCommand, ScanCommandInput, ScanCommandOutput } from "@aws-sdk/client-dynamodb";
 import { DoctorDynamoDbVerticeModel } from "../../models";
 import { DoctorVerticeEntity } from "../../entities";
 
@@ -41,6 +41,30 @@ export class DoctorVerticeDynamoDbRepository implements DoctorVerticeRepositoryI
         };
 
         return result;
+    }
+
+    public async findAll() {
+        const param: ScanCommandInput = {
+            TableName: "medicine_api"
+        };
+    
+        try {
+            const data: ScanCommandOutput = await this.dynamoDbService.scan(param);
+            if (data.Items) {
+                const items = data.Items.map((item) => {
+                    return this._unmarshall(item);
+                });
+                return items;
+            }
+            return [];
+        } catch (error) {
+            console.error("Error retrieving items from DynamoDB:", error);
+            throw error;
+        }
+    } 
+
+    private _unmarshall(item: any): any {
+        return JSON.parse(JSON.stringify(item));
     }
 
 }

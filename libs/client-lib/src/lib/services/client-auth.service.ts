@@ -13,6 +13,7 @@ import { randomUUID } from "node:crypto";
 import { ConfigService } from "@nestjs/config";
 import * as bcrypt from "bcrypt";
 import { MAIL_SENDER_TOKEN, MailSenderInterface } from "@app/common";
+import { ClientEntity } from "../entities";
 
 @Injectable()
 export class ClientAuthService {
@@ -33,6 +34,12 @@ export class ClientAuthService {
     public async clientExists(arg: string | number): Promise<boolean> {
         const result = await this.clientRepository.findOne(arg);
         return Boolean(result);
+    }
+
+    public async findOne(id: number): Promise<ClientEntity>;
+    public async findOne(email: string): Promise<ClientEntity>;
+    public async findOne(arg: string | number): Promise<ClientEntity> {
+        return this.clientRepository.findOne(arg);
     }
 
     public async sendVerificationLink(

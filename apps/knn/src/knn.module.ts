@@ -8,6 +8,8 @@ import { CountryLibModule, CountryTypeormModel } from "@app/country-lib";
 import { DatabaseModule } from "@app/database";
 import { databaseConfig } from "./config";
 import { NatsModule, NatsService } from "@app/nats";
+import { ClientTypeormModel } from "@app/client-lib";
+import { SuggestionsVerticesModule, SuggestionsVerticesService } from "@app/suggestions-vertices";
 
 @Module({
     imports: [
@@ -18,9 +20,10 @@ import { NatsModule, NatsService } from "@app/nats";
         CountryLibModule,
         DatabaseModule.forRoot(
             databaseConfig,
-            [CityTypeormModel,CountryTypeormModel]
+            [CityTypeormModel,CountryTypeormModel, ClientTypeormModel]
         ),
-        NatsModule
+        NatsModule,
+        SuggestionsVerticesModule
     ],
     controllers: [
         KnnController
@@ -28,7 +31,8 @@ import { NatsModule, NatsService } from "@app/nats";
     providers: [
         DoctorVerticesService,
         CityLibService,
-        NatsService
+        NatsService,
+        SuggestionsVerticesService
     ]
 })
 export class KnnModule {}

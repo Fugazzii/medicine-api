@@ -34,4 +34,7 @@ export class FormTypeormModel implements FormEntity {
 
     @Column({ type: "integer", nullable: false })
     public price_to: number;
+
+    @Column({ type: "integer", nullable: false })
+    public city: number;
 }

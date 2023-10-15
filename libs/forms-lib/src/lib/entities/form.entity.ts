@@ -5,4 +5,5 @@ export interface FormEntity {
     price_from: number;
     price_to: number;
     relevant_specialist: number;
+    city: number;
 }

@@ -9,8 +9,8 @@ export class SuggestionsVerticesService {
         @Inject(SUGGESTION_VERTICE_REPOSITORY_TOKEN) private readonly suggestionRepository: SuggestionVerticesRepositoryInterface
     ) {}
     
-    public async insert(doctorVerticeEntity: SuggestionVerticeEntity) {
-        return this.suggestionRepository.insert(doctorVerticeEntity);
+    public async insert(suggestionVerticeEntity: SuggestionVerticeEntity) {
+        return this.suggestionRepository.insert(suggestionVerticeEntity);
     }
 
 }
