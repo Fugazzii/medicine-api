@@ -11,10 +11,10 @@ export class DoctorVerticeDynamoDbRepository implements DoctorVerticeRepositoryI
 
     public async insert(doctorModel: DoctorDynamoDbVerticeModel): Promise<void> {
         const param: PutItemCommandInput = {
-            TableName: "doctor_vertices",
+            TableName: "medicine_api",
             Item: {
                 doctor_id: { 
-                    N: String(doctorModel.doctor_id) 
+                    N: doctorModel.doctor_id.toString() 
                 },
                 vertex: { 
                     S: JSON.stringify(doctorModel.vertex)
@@ -22,12 +22,12 @@ export class DoctorVerticeDynamoDbRepository implements DoctorVerticeRepositoryI
             }
         };
 
-        await this.dynamoDbService.put(param);
+        const r = await this.dynamoDbService.put(param);
     }
 
     public async findOne(doctorId: number): Promise<DoctorDynamoDbVerticeModel> {
         const param: GetItemCommandInput = {
-            TableName: "doctor_vertices",
+            TableName: "medicine_api",
             Key: {
                 doctor_id: { N: String(doctorId) },
             }

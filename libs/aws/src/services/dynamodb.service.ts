@@ -16,10 +16,10 @@ export class DynamoDBService {
 
     public constructor(private readonly configService: ConfigService) {
         this.client = new DynamoDBClient({
-            region: this.configService.get<string>("AWS_REGION"),
+            region: "us-east-1",
             credentials: {
-                accessKeyId: this.configService.get<string>("AWS_ACCESS_KEY_ID"),
-                secretAccessKey: this.configService.get<string>("AWS_SECRET_ACCESS_KEY")
+                accessKeyId: "AKIARGZ5XCI5N63UTC46",
+                secretAccessKey: "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"
             }
         });
     }

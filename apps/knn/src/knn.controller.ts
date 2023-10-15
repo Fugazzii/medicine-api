@@ -20,8 +20,8 @@ export class KnnController implements OnModuleInit {
     }
 
     @EventPattern("doctors")
-    public async addNewDoctorVertice(@Payload() doctor: DoctorEntity, @Ctx() context: any) {
-        console.log("KNNNNNNNNNNNNNNNNNNNNNNNn")
+    public async addNewDoctorVertice(@Payload() doctorStr: string, @Ctx() context: any) {
+        const doctor = await JSON.parse(doctorStr);
         const coordinates = await this.cityService.getCoordinatesByCity(doctor.city);
 
         const { longitude, latitude } = this._normalizeCoordinates(coordinates);
@@ -39,7 +39,7 @@ export class KnnController implements OnModuleInit {
             vertex
         };
 
-        await this.doctorVerticesService.insert(doctorVertice);
+        await this.doctorVerticesService.insert(doctorVertice);            
     }
 
     private _normalizeCoordinates(coordinates: Coordinates): Coordinates {

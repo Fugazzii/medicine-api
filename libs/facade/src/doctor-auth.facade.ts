@@ -53,12 +53,13 @@ export class DoctorAuthFacade implements OnModuleInit {
 
             const specialty_id = await this.specialtyService.getIdByName(createDoctorDto.specialty);
             const city_id = await this.cityService.getIdByName(createDoctorDto.city);
+            const randomRating = this.doctorAuthService.generateRandomRating();
 
             const doctorEntity: Omit<DoctorEntity, "id"> = {
                 ...createDoctorDto,
                 city: city_id,
                 specialty: specialty_id,
-                rating: this.doctorAuthService.generateRandomRating()
+                rating: randomRating
             };
 
             const bytes = await this.doctorAuthService.sendVerificationLink(doctorEntity);

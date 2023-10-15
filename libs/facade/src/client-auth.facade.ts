@@ -27,22 +27,15 @@ export class ClientAuthFacade {
 
     public async signUpClient(signUpClientDto: SignUpClientDto) {
         try {
-            const exists = await this.clientAuthService.clientExists(
-                signUpClientDto.email
-            );
+            const exists = await this.clientAuthService.clientExists(signUpClientDto.email);
 
             if (exists) {
                 throw new ConflictException("User is already registered");
             }
 
-            const bytes = await this.clientAuthService.sendVerificationLink(
-                signUpClientDto
-            );
-            await this.redisService.set(
-                bytes,
-                JSON.stringify(signUpClientDto),
-                1000 * 60 * 3
-            );
+            const bytes = await this.clientAuthService.sendVerificationLink(signUpClientDto);
+
+            await this.redisService.set(bytes, JSON.stringify(signUpClientDto), 1000 * 60 * 3);
 
             return {
                 data: null,
@@ -72,9 +65,8 @@ export class ClientAuthFacade {
 
             for (const key in obj) {
                 if (typeof obj[key] !== "string") continue;
-                const encrypted = await this.kmsService.encrypt(
-                    Buffer.from(obj[key])
-                );
+
+                const encrypted = await this.kmsService.encrypt(Buffer.from(obj[key]));
                 obj[key] = encrypted.toString("base64");
             }
 

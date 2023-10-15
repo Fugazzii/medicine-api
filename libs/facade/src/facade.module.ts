@@ -8,7 +8,6 @@ import { ClientFormService, FormsLibModule } from "@app/forms-lib";
 import { SpecialtyModule, SpecialtyService } from "@app/specialty";
 import { AwsModule, KmsService } from "@app/aws";
 import { NatsModule, NatsService } from "@app/nats";
-import { ClientsModule } from "@nestjs/microservices";
 
 @Module({
     imports: [
