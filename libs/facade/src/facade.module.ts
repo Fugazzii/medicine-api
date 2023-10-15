@@ -10,6 +10,7 @@ import { AwsModule, DynamoDBService, KmsService } from "@app/aws";
 import { NatsModule, NatsService } from "@app/nats";
 import { CityLibModule, CityLibService } from "@app/city-lib";
 import { CountryLibModule, CountryLibService } from "@app/country-lib";
+import { ClientDoctorFacade } from "./client-doctor.facade";
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { CountryLibModule, CountryLibService } from "@app/country-lib";
     ],
     providers: [
         ClientAuthFacade,
+        ClientDoctorFacade,
         ClientFormFacade,
         ClientFormService,
         JwtService,
@@ -33,6 +35,6 @@ import { CountryLibModule, CountryLibService } from "@app/country-lib";
         CityLibService,
         CountryLibService
     ],
-    exports: [ClientAuthFacade, ClientFormFacade]
+    exports: [ClientAuthFacade, ClientFormFacade, ClientDoctorFacade]
 })
 export class FacadeModule {}

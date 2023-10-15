@@ -1,13 +1,11 @@
 import { CityLibService } from "@app/city-lib";
-import { ClientAuthService, ClientEntity } from "@app/client-lib";
 import { Vertex, DoctorRating, Coordinates, DoctorVertex } from "@app/common";
-import { DoctorEntity } from "@app/doctor-lib";
 import { DoctorVerticesService, DoctorVerticeEntity } from "@app/doctor-vertices";
 import { FormEntity } from "@app/forms-lib";
 import { NatsService } from "@app/nats";
 import { SuggestionsVerticesService } from "@app/suggestions-vertices";
 import { Controller, OnModuleInit } from "@nestjs/common";
-import { Payload, Ctx, EventPattern } from "@nestjs/microservices";
+import { Payload, Ctx, EventPattern, MessagePattern } from "@nestjs/microservices";
 
 @Controller()
 export class KnnController implements OnModuleInit {
@@ -71,11 +69,24 @@ export class KnnController implements OnModuleInit {
             );
 
 
-            await this.suggestionsVerticesService.insert({
+        await this.suggestionsVerticesService.insert({
             form_id: form.id,
             suggestion_vertices: suggestedDoctorVertices
         });
     }
+
+    @MessagePattern("matching_doctors.input")
+    public async handleMatchings(@Payload() formId: string, @Ctx() _context: any) {
+        const { id } = JSON.parse(formId).id;
+        return this.suggestionsVerticesService.findByFormId(id);
+    }
+    
+    /**
+     * 
+     * PRIVATE METHODS
+     * 
+    */
+
 
     private _normalizeCoordinates(coordinates: Coordinates): Coordinates {
         const normalizedLatitude = (coordinates.latitude + 90) / 180;

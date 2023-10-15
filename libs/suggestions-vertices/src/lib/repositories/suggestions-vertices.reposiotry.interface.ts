@@ -4,4 +4,5 @@ export const SUGGESTION_VERTICE_REPOSITORY_TOKEN = Symbol("SUGGESTION_VERTICE_RE
 
 export interface SuggestionVerticesRepositoryInterface {
     insert(suggestionVerticeEntity: SuggestionVerticeEntity): Promise<void>;
+    findOne(id: number): Promise<SuggestionVerticeEntity>;
 }

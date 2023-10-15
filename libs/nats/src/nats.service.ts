@@ -26,5 +26,8 @@ export class NatsService {
     return this.client.emit(topic, message);
   }
 
+  public publishMessage(topic: string, message: string) {
+    return this.client.send(topic, message);
+  }
 
 }

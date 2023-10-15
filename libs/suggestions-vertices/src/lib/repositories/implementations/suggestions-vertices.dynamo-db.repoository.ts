@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { SuggestionVerticeEntity } from "../../entites";
 import { SuggestionVerticesRepositoryInterface } from "../suggestions-vertices.reposiotry.interface";
 import { DynamoDBService } from "@app/aws";
-import { PutItemCommandInput } from "@aws-sdk/client-dynamodb";
+import { GetItemCommandInput, PutItemCommandInput } from "@aws-sdk/client-dynamodb";
 
 @Injectable()
 export class SuggestionsVerticeDynamoDbRepository implements SuggestionVerticesRepositoryInterface {
@@ -21,8 +21,27 @@ export class SuggestionsVerticeDynamoDbRepository implements SuggestionVerticesR
                 }
             }
         };
-        const r = await this.dynamoDbService.put(param);
-        console.log(r);
+        const _ = await this.dynamoDbService.put(param);
+    }
+
+    public async findOne(id: number): Promise<SuggestionVerticeEntity> {
+        const param: GetItemCommandInput = {
+            TableName: "medicine_api-suggestion-vertices",
+            Key: {
+                form_id: {
+                    N: id.toString()
+                }
+            }
+        };
+
+        const output = await this.dynamoDbService.get(param);
+        console.log(output);
+        const result: SuggestionVerticeEntity = {
+            form_id: id,
+            suggestion_vertices: JSON.parse(output.Item.suggestion_vertices.S)
+        };
+
+        return result;
     }
 
 }

@@ -22,9 +22,7 @@ import {
 } from "@app/doctor-lib";
 import { SpecialtyService } from "@app/specialty";
 import { CityLibService } from "@app/city-lib";
-import { ConfigService } from "@nestjs/config";
 import { NatsService } from "@app/nats";
-import { ClientNats, ClientProxy } from "@nestjs/microservices";
 
 @Injectable()
 export class DoctorAuthFacade implements OnModuleInit {
@@ -35,7 +33,6 @@ export class DoctorAuthFacade implements OnModuleInit {
         private readonly jwtService: JwtService,
         private readonly specialtyService: SpecialtyService,
         private readonly cityService: CityLibService,
-        private readonly configService: ConfigService,
         private readonly broker: NatsService
     ) {}
     

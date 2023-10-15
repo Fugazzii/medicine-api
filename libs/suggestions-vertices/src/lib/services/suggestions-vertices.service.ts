@@ -13,4 +13,7 @@ export class SuggestionsVerticesService {
         return this.suggestionRepository.insert(suggestionVerticeEntity);
     }
 
+    public async findByFormId(formId: number) {
+        return this.suggestionRepository.findOne(formId);
+    }
 }

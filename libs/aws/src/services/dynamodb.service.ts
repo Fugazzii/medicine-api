@@ -27,17 +27,17 @@ export class DynamoDBService {
         });
     }
 
-    public put(params: PutItemCommandInput): Promise<PutItemCommandOutput> {
+    public async put(params: PutItemCommandInput): Promise<PutItemCommandOutput> {
         const command = new PutItemCommand(params);
         return this.client.send(command);
     }
 
-    public get(params: GetItemCommandInput): Promise<GetItemCommandOutput> {
+    public async get(params: GetItemCommandInput): Promise<GetItemCommandOutput> {
         const command = new GetItemCommand(params);
         return this.client.send(command);
     }
 
-    public scan(param: ScanCommandInput): Promise<ScanCommandOutput> {
+    public async scan(param: ScanCommandInput): Promise<ScanCommandOutput> {
         const command = new ScanCommand(param);
         return this.client.send(command);
     }
