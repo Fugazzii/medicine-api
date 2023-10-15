@@ -54,23 +54,22 @@ export class ClientAuthFacade {
     public async verifyClient(bytes: string) {
         try {
             const signUpOptionsStringed = await this.redisService.get(bytes);
-            const signUpOptions: SignUpClientDto = await JSON.parse(
-                signUpOptionsStringed
-            );
+            const signUpOptions: SignUpClientDto = await JSON.parse(signUpOptionsStringed);
 
             if (!signUpOptions) {
                 throw new NotFoundException();
             }
-            const obj = { ...signUpOptions };
+            // const obj = { ...signUpOptions };
 
-            for (const key in obj) {
-                if (typeof obj[key] !== "string") continue;
+            // for (const key in obj) {
+            //     if (typeof obj[key] !== "string") continue;
 
-                const encrypted = await this.kmsService.encrypt(Buffer.from(obj[key]));
-                obj[key] = encrypted.toString("base64");
-            }
+            //     const encrypted = await this.kmsService.encrypt(Buffer.from(obj[key]));
+            //     obj[key] = encrypted.toString("base64");
+            // }
 
-            await this.clientAuthService.addNewClient(obj);
+            // await this.clientAuthService.addNewClient(obj);
+            await this.clientAuthService.addNewClient(signUpOptions);
             await this.redisService.remove(bytes);
 
             return {

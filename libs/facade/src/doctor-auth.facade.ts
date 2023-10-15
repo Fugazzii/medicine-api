@@ -91,7 +91,7 @@ export class DoctorAuthFacade implements OnModuleInit {
             await this.doctorAuthService.addNewDoctor(signUpOptions);
             await this.redisService.remove(bytes);
 
-            const doctorEntity: DoctorEntity = await this.doctorAuthService.findDoctorById(signUpOptions.email);
+            const doctorEntity: DoctorEntity = await this.doctorAuthService.findDoctor(signUpOptions.email);
             const stringed = JSON.stringify(doctorEntity);
 
             this.broker.publish("doctors", stringed);

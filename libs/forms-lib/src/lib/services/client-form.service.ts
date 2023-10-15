@@ -12,7 +12,7 @@ export class ClientFormService {
         private readonly formRepository: FormRepositoryInterface
     ) {}
 
-    public async createForm(createFormEntity: Omit<FormEntity, "id">) {
+    public createForm(createFormEntity: Omit<FormEntity, "id">): Promise<number> {
         return this.formRepository.create(createFormEntity);
     }
 

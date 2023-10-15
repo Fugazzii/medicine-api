@@ -15,7 +15,7 @@ import {
 @Module({
     imports: [
         TypeOrmModule.forFeature([FormTypeormModel, SpecialtyTypeormModel]),
-        SpecialtyModule
+        SpecialtyModule,
     ],
     providers: [
         ClientFormService,

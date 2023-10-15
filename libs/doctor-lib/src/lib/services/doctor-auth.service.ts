@@ -30,7 +30,7 @@ export class DoctorAuthService {
         return this.doctorRepository.create(newDoctor);
     }
 
-    public async findDoctorById(email: string) {
+    public async findDoctor(email: string) {
         return this.doctorRepository.findOne(email);
     }
 

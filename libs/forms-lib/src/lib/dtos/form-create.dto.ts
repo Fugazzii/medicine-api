@@ -15,4 +15,7 @@ export class CreateFormDto {
 
     @ApiProperty({ example: 2000 })
     public price_to: number;
+
+    @ApiProperty({ example: "Tbilisi" })
+    public city: string;
 }

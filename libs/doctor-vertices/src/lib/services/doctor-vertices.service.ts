@@ -26,26 +26,30 @@ export class DoctorVerticesService {
         const doctorVertices = await this.doctorVerticeRepository.findAll();        
 
         const distances: Array<Distance> = doctorVertices.map((v: DoctorVerticeEntity) => {
-            const distance = this._getDistance(v.vertex, formVertex);
+            const vertex = JSON.parse(v.vertex.S);
+            const distance = this._getDistance(vertex, formVertex);
         
             return {
                 distance,
-                doctor_id: v.doctor_id
+                doctor_id: Number(v.doctor_id.N)
             };
         });
 
         distances.sort((d1, d2) => d1.distance - d2.distance);
 
-        for(let i = 0; i < k; i++) {
-            const { doctor_id } = distances[i];
-            
-            const doctorVertice: DoctorVerticeEntity = doctorVertices.find((val: DoctorVerticeEntity) => val.doctor_id === doctor_id);
+        for(let i = 0; i < k && i < distances.length; i++) {
+            const doctor_id = distances[i].doctor_id;
+
+            const doctorVertice: DoctorVerticeEntity = doctorVertices.find((val: DoctorVerticeEntity) => Number(val.doctor_id.N) === doctor_id);
+
             const vertice: DoctorVertex = {
                 ...doctorVertice.vertex,
                 isHidden: false,
                 doctor_id
             };
-            result.push(vertice);
+            
+            const suggestedVertice = JSON.parse(vertice.S);
+            result.push(suggestedVertice);
         }
 
         return result;

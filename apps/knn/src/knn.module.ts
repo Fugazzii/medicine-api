@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { KnnController } from "./knn.controller";
-import { AwsModule } from "@app/aws";
+import { AwsModule, DynamoDBService } from "@app/aws";
 import { CommonModule } from "@app/common";
 import { DoctorVerticesModule, DoctorVerticesService } from "@app/doctor-vertices";
 import { CityLibModule, CityLibService, CityTypeormModel } from "@app/city-lib";
@@ -10,6 +10,7 @@ import { databaseConfig } from "./config";
 import { NatsModule, NatsService } from "@app/nats";
 import { ClientTypeormModel } from "@app/client-lib";
 import { SuggestionsVerticesModule, SuggestionsVerticesService } from "@app/suggestions-vertices";
+import { ConfigService } from "@nestjs/config";
 
 @Module({
     imports: [

@@ -12,8 +12,9 @@ export class FormTypeormRepository implements FormRepositoryInterface {
         private readonly repository: Repository<FormTypeormModel>
     ) {}
 
-    public async create(newForm: Omit<FormEntity, "id">): Promise<void> {
-        this.repository.insert(newForm);
+    public async create(newForm: Omit<FormEntity, "id">): Promise<number> {
+        const { id } = await this.repository.save(newForm);        
+        return id;
     }
 
     public findOne(id: number): Promise<FormEntity> {

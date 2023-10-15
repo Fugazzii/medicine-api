@@ -6,8 +6,10 @@ import { ClientLibModule } from "@app/client-lib";
 import { ClientFormFacade } from "./client-form.facade";
 import { ClientFormService, FormsLibModule } from "@app/forms-lib";
 import { SpecialtyModule, SpecialtyService } from "@app/specialty";
-import { AwsModule, KmsService } from "@app/aws";
+import { AwsModule, DynamoDBService, KmsService } from "@app/aws";
 import { NatsModule, NatsService } from "@app/nats";
+import { CityLibModule, CityLibService } from "@app/city-lib";
+import { CountryLibModule, CountryLibService } from "@app/country-lib";
 
 @Module({
     imports: [
@@ -15,7 +17,9 @@ import { NatsModule, NatsService } from "@app/nats";
         FormsLibModule,
         SpecialtyModule,
         AwsModule,
-        NatsModule
+        NatsModule,
+        CityLibModule,
+        CountryLibModule
     ],
     providers: [
         ClientAuthFacade,
@@ -25,7 +29,9 @@ import { NatsModule, NatsService } from "@app/nats";
         RedisService,
         SpecialtyService,
         KmsService,
-        NatsService
+        NatsService,
+        CityLibService,
+        CountryLibService
     ],
     exports: [ClientAuthFacade, ClientFormFacade]
 })

@@ -1,5 +1,4 @@
 import { DoctorVertex } from "@app/common";
-import { DoctorVerticeEntity } from "@app/doctor-vertices";
 
 export interface SuggestionVerticeEntity {
     form_id: number;

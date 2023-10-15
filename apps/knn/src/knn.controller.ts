@@ -49,6 +49,7 @@ export class KnnController implements OnModuleInit {
     @EventPattern("forms")
     public async addNewSuggestionVertice(@Payload() formStr: string, @Ctx() _context: any) {
         const form: FormEntity = await JSON.parse(formStr);
+
         const coordinates = await this.cityService.getCoordinatesByCity(form.city);
         const avgPrice = (form.price_from + form.price_to) / 2;
 
@@ -69,7 +70,8 @@ export class KnnController implements OnModuleInit {
                 doctorCount
             );
 
-        await this.suggestionsVerticesService.insert({
+
+            await this.suggestionsVerticesService.insert({
             form_id: form.id,
             suggestion_vertices: suggestedDoctorVertices
         });

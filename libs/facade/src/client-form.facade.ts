@@ -1,5 +1,7 @@
+import { CityLibService } from "@app/city-lib";
 import { JwtService } from "@app/common";
 import { ClientFormService, CreateFormDto } from "@app/forms-lib";
+import { NatsService } from "@app/nats";
 import { SpecialtyService } from "@app/specialty";
 import { Injectable } from "@nestjs/common";
 
@@ -8,7 +10,9 @@ export class ClientFormFacade {
     public constructor(
         private readonly formService: ClientFormService,
         private readonly jwtService: JwtService,
-        private readonly specialtyService: SpecialtyService
+        private readonly specialtyService: SpecialtyService,
+        private readonly cityService: CityLibService,
+        private readonly broker: NatsService
     ) {}
 
     public async createForm(createFormDto: CreateFormDto, token: string) {
@@ -18,13 +22,21 @@ export class ClientFormFacade {
                 createFormDto.relevant_specialist_name
             );
 
-            await this.formService.createForm({
+            const city_id = await this.cityService.getIdByName(createFormDto.city);
+
+            const formId: number = await this.formService.createForm({
                 client: id,
                 description: createFormDto.description,
-                relevant_specialist: specialist_id,
                 price_from: createFormDto.price_from,
-                price_to: createFormDto.price_to,                
+                price_to: createFormDto.price_to,
+                relevant_specialist: specialist_id,
+                city: city_id           
             });
+
+            const formEntity = await this.formService.getFormById(formId);
+            const str = JSON.stringify(formEntity);
+
+            this.broker.publish("forms", str);
 
             return {
                 data: null,
