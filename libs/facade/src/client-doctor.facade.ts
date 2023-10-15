@@ -12,14 +12,61 @@ export class ClientDoctorFacade {
     ) {}
 
     public async getMatchingDoctors(formId: number, token: string) {
+        const _ = await this._checkAuthorized(token);
+
+        const msg = JSON.stringify({ id: formId });
+        return this.broker.publishMessage("matching_doctors.input", msg);
+    }
+
+    public async hideDoctor(doctorId: number, token: string) {
+        const client = await this._checkAuthorized(token);
+
+        const msg = {
+            clientId: client.id,
+            doctorId: doctorId
+        };
+
+        this.broker.publish("hide_doctor", JSON.stringify(msg));
+    
+        return {
+            success: true,
+            message: "Doctor hidden",
+            data: null
+        };
+    }
+
+    public async showDoctor(doctorId: number, token: string) {
+        const client = await this._checkAuthorized(token);
+
+        const msg = {
+            clientId: client.id,
+            doctorId: doctorId
+        };
+
+        this.broker.publish("show_doctor", JSON.stringify(msg));
+    
+        return {
+            success: true,
+            message: "Doctor unhidden",
+            data: null
+        };
+    }
+
+    /**
+     * 
+     * PRIVATE 
+     * 
+     */
+
+    private async _checkAuthorized(token: string) {
         const { id } = await this.jwtService.verifyTokenStrategy(token);
         const client = await this.clientService.findOne(id);
 
         if(!client) {
             throw new UnauthorizedException();
         }
-        const msg = JSON.stringify({ id: formId });
-        return this.broker.publishMessage("matching_doctors.input", msg);
+
+        return client;
     }
 
 }

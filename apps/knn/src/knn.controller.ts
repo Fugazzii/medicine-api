@@ -75,6 +75,20 @@ export class KnnController implements OnModuleInit {
         });
     }
 
+    @EventPattern("hide_doctor")
+    public async hideDoctor(@Payload() msg: string) {
+        const { doctorId, clientId } = await JSON.parse(msg);
+
+        return this.suggestionsVerticesService.hide({ doctorId, clientId });
+    }
+
+    @EventPattern("show_doctor")
+    public async showDoctor(@Payload() msg: string) {
+        const { doctorId, clientId } = await JSON.parse(msg);
+
+        return this.suggestionsVerticesService.show({ doctorId, clientId });
+    }
+
     @MessagePattern("matching_doctors.input")
     public async handleMatchings(@Payload() formId: string, @Ctx() _context: any) {
         const { id } = JSON.parse(formId).id;

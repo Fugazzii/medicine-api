@@ -18,9 +18,15 @@ export class ClientDoctorController {
         res.json(response);
     }
 
-    @Post("/show/:id")
-    public async showDoctor() {}
-
     @Post("/hide/:id")
-    public async hideDoctor() {}
+    public async hideDoctor(@Body() doctorId: number, @Req() req: Request, @Res() res: Response) {
+        const token = req.headers.authorization?.split(" ")[1];
+        return this.facade.hideDoctor(doctorId, token);
+    }
+
+    @Post("/show/:id")
+    public async showDoctor(@Body() doctorId: number, @Req() req: Request, @Res() res: Response) {
+        const token = req.headers.authorization?.split(" ")[1];
+        return this.facade.showDoctor(doctorId, token);
+    }
 }

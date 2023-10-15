@@ -13,6 +13,16 @@ export class SuggestionsVerticesService {
         return this.suggestionRepository.insert(suggestionVerticeEntity);
     }
 
+    public async hide(data: { doctorId: number, clientId: number }) {
+        throw new Error("Unimplemented");
+        // return this.suggestionRepository.edit(data.doctorId, data.)
+    }
+
+    public async show(data: { doctorId: number, clientId: number }) {
+        throw new Error("Unimplemented");
+        // return this.suggestionRepository.edit(data.doctorId, data.)
+    }
+
     public async findByFormId(formId: number) {
         return this.suggestionRepository.findOne(formId);
     }
