@@ -7,6 +7,7 @@ async function bootstrap() {
         {
             transport: Transport.NATS,
             options: {
+                name: "NATSS",
                 servers: ["nats://nats:4222"],
                 queue: "doctors"
             }

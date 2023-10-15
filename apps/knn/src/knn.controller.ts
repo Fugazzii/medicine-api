@@ -2,17 +2,24 @@ import { CityLibService } from "@app/city-lib";
 import { Vertex, DoctorRating, Coordinates } from "@app/common";
 import { DoctorEntity } from "@app/doctor-lib";
 import { DoctorVerticesService, DoctorVerticeEntity } from "@app/doctor-vertices";
-import { Controller } from "@nestjs/common";
-import { MessagePattern, Payload, Ctx } from "@nestjs/microservices";
+import { NatsService } from "@app/nats";
+import { Controller, OnModuleInit } from "@nestjs/common";
+import { Payload, Ctx, EventPattern } from "@nestjs/microservices";
 
 @Controller()
-export class KnnController {
+export class KnnController implements OnModuleInit {
     public constructor(
         private readonly doctorVerticesService: DoctorVerticesService,
-        private readonly cityService: CityLibService
+        private readonly cityService: CityLibService,
+        private readonly broker: NatsService
     ) {}
 
-    @MessagePattern("doctors")
+    public async onModuleInit() {
+        const conn = await this.broker.connect();
+        return conn;
+    }
+
+    @EventPattern("doctors")
     public async addNewDoctorVertice(@Payload() doctor: DoctorEntity, @Ctx() context: any) {
         console.log("KNNNNNNNNNNNNNNNNNNNNNNNn")
         const coordinates = await this.cityService.getCoordinatesByCity(doctor.city);

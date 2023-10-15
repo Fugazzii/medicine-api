@@ -5,16 +5,26 @@ import { ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservice
 export class NatsService {
   private client: ClientProxy;
 
-  constructor() {
+  public constructor() {
     this.client = ClientProxyFactory.create({
       transport: Transport.NATS,
       options: {
-        url: 'nats://localhost:4222',
-      },
+        url: 'nats://nats:4222',
+        servers: ["nats://nats:4222"]
+      }
     });
   }
 
-  async publish(topic: string, message: string) {
-    return this.client.send(topic, message).toPromise();
+  public async connect() {
+    this.client
+      .connect()
+      .then(() => console.log("==============================> Connected to NATS"))
+      .catch((err) => console.error("==============================> Failed to connect to NATS", err));
   }
+
+  public publish(topic: string, message: string) {
+    return this.client.emit(topic, message);
+  }
+
+
 }

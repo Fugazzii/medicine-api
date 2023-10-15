@@ -7,6 +7,7 @@ import { CityLibModule, CityLibService, CityTypeormModel } from "@app/city-lib";
 import { CountryLibModule, CountryTypeormModel } from "@app/country-lib";
 import { DatabaseModule } from "@app/database";
 import { databaseConfig } from "./config";
+import { NatsModule, NatsService } from "@app/nats";
 
 @Module({
     imports: [
@@ -18,14 +19,16 @@ import { databaseConfig } from "./config";
         DatabaseModule.forRoot(
             databaseConfig,
             [CityTypeormModel,CountryTypeormModel]
-        )
+        ),
+        NatsModule
     ],
     controllers: [
         KnnController
     ],
     providers: [
         DoctorVerticesService,
-        CityLibService
+        CityLibService,
+        NatsService
     ]
 })
 export class KnnModule {}

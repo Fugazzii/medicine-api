@@ -5,7 +5,8 @@ import {
     ConflictException,
     Inject,
     Injectable,
-    NotFoundException
+    NotFoundException,
+    OnModuleInit
 } from "@nestjs/common";
 
 /**
@@ -26,7 +27,8 @@ import { NatsService } from "@app/nats";
 import { ClientNats, ClientProxy } from "@nestjs/microservices";
 
 @Injectable()
-export class DoctorAuthFacade {
+export class DoctorAuthFacade implements OnModuleInit {
+    
     public constructor(
         private readonly doctorAuthService: DoctorAuthService,
         private readonly redisService: RedisService,
@@ -36,6 +38,10 @@ export class DoctorAuthFacade {
         private readonly configService: ConfigService,
         private readonly broker: NatsService
     ) {}
+    
+    public async onModuleInit() {
+        await this.broker.connect();
+    }
 
     public async signUpDoctor(createDoctorDto: CreateDoctorDto) {
         try {
@@ -87,7 +93,7 @@ export class DoctorAuthFacade {
             const doctorEntity: DoctorEntity = await this.doctorAuthService.findDoctorById(signUpOptions.email);
             const stringed = JSON.stringify(doctorEntity);
 
-            // this.broker.send("doctors", stringed);
+            this.broker.publish("doctors", stringed);
 
             return {
                 data: null,
